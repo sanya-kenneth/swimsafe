@@ -1,0 +1,25 @@
+language: python
+python:
+  - "3.6"
+
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls
+
+services:
+  - postgresql
+
+env:
+  global:
+    - SECRET='sddsdwejernefnbfbhejwjfjfjwjnd'
+
+before_script:
+  - psql -c 'CREATE DATABASE test_swimsafe;' -U postgres 
+
+#Command to run tests
+script:
+  - nosetests --with-coverage --cover-tests
+  - coverage report
+
+after_success:
+  - coveralls
