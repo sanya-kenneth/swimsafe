@@ -1,8 +1,7 @@
 from validate_email import validate_email
 from api.auth.models import User
 from api.database.db import db
-from api.auth.utilities import validateUser, encode_token,\
-    protected_route
+from api.auth.utilities import validateUser, encode_token
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash,\
                         check_password_hash
@@ -69,9 +68,55 @@ class UserController:
         if user_login_data:
             if user_login_data.email == user_email and \
                 check_password_hash(user_login_data.password, user_password):
-                access_token = encode_token(user_email, user_login_data.account_type)
+                access_token = encode_token(user_email)
                 return jsonify({'message': 'You are now loggedin',
                 'status': 200, 'access_token': access_token.decode('UTF-8'),
                 'account_type': user_login_data.account_type}), 200
         return jsonify({'error': 'Wrong email or password',
                         'status': 400}), 400
+    
+
+    def fetch_users(self, current_user):
+        if not current_user:
+            return jsonify({'error': 'You are not loggedin',
+                            'status': 403}), 403
+        if current_user.account_type != 'admin':
+            return jsonify({'error':
+                            'You are not allowed to perform this action',
+                            'status': 403
+                            }), 403
+        display_list = []
+        keys = ['userid', 'firstname', 'lastname', 'email', 'phonenumber',
+        'account_type']
+        user_list = User.query.all()
+        for user_item in user_list:
+            details = [user_item.user_id, user_item.firstname,
+            user_item.lastname, user_item.email, user_item.phone_number,
+            user_item.account_type]
+            display_list.append(dict(zip(keys, details)))
+        if not user_list:
+            return jsonify({'message': 'There are no users registered yet',
+                            'status': 404}), 404
+        return jsonify({'data':display_list, 
+                        'status': 200}), 200
+
+
+    def fetch_user(self, current_user):
+        if not current_user:
+            return jsonify({'error': 'You are not loggedin',
+                            'status': 403}), 403
+        get_user = User.query.filter_by(user_id=current_user.user_id).first()
+        if not get_user:
+            return jsonify({'message': 'User record not found',
+                            'status': 404}), 404
+        return_dict =  {
+                        'user_id': get_user.user_id,
+                        'firstname': get_user.firstname,
+                        'lastname': get_user.lastname,
+                        'email': get_user.email,
+                        'phonenumber': get_user.phone_number,
+                        'account_type': get_user.account_type
+                      }
+        return jsonify({'data': return_dict, 'status': 200}), 200
+
+

@@ -115,7 +115,7 @@ def protected_route(f):
         try:
             data = jwt.decode(
                 token, app.config['SECRET'], algorithms=['HS256'])
-            current_user = User.query.filter_by(email=data['sub'])
+            current_user = User.query.filter_by(email=data['sub']).first()
         except jwt.ExpiredSignatureError:
             return jsonify({'status': 401,
                             'error': 'Token signature expired. Please login'}), 401

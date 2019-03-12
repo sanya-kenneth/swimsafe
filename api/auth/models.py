@@ -9,8 +9,8 @@ class User(db.Model):
     email = db.Column('user_email',db.String(120), unique=True, nullable=False)
     phone_number = db.Column('phone_number',db.Integer, nullable=False)
     password = db.Column('user_password',db.Text, unique=True, nullable=False)
-    account_type = db.Column('account_type',db.String(20), unique=True, nullable=False)
+    account_type = db.Column('account_type',db.String(20), nullable=False)
 
     
     def __repr__(self):
-        return '<User %r>' % self.username
+        return '<User %r>' % self.email
