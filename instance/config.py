@@ -7,7 +7,8 @@ class BaseConfig:
     DEBUG = False
     TESTING = False
     SECRET = os.getenv('SECRET')
-    DATABASE_URI = 'postgres://postgres:psql@localhost:5432/swimsafe'
+    SQLALCHEMY_DATABASE_URI = 'postgres://postgres:psql@localhost:5432/swimsafe'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class DevelopmentConfig(BaseConfig):
@@ -16,7 +17,7 @@ class DevelopmentConfig(BaseConfig):
     DEBUG = True
     TESTING = False
     ENV = "Development"
-    DATABASE_URI = 'postgres://postgres:psql@localhost:5432/swimsafe'
+    SQLALCHEMY_DATABASE_URI = 'postgres://postgres:psql@localhost:5432/swimsafe'
 
 
 class TestingConfig(BaseConfig):
@@ -25,7 +26,7 @@ class TestingConfig(BaseConfig):
     DEBUG = True
     TESTING = True
     ENV = "Testing"
-    DATABASE_URI = 'postgres://postgres:psql@localhost:5432/test_swimsafe'
+    SQLALCHEMY_DATABASE_URI = 'postgres://postgres:psql@localhost:5432/test_swimsafe'
 
 
 class ProductionConfig(BaseConfig):
@@ -34,7 +35,7 @@ class ProductionConfig(BaseConfig):
     DEBUG = False
     TESTING = False
     ENV = "Production"
-    DATABASE_URI = os.getenv('production_db')
+    SQLALCHEMY_DATABASE_URI = os.getenv('production_db')
 
 
 app_config = {
