@@ -1,5 +1,10 @@
+from flask import jsonify, abort, make_response
+from flask import request, current_app as app
+from functools import wraps
+from api.auth.models import User
 import re
-from flask import jsonify, abort, make_response, Response
+import datetime
+import jwt
 
 
 class validateUser:
@@ -72,3 +77,50 @@ class validateUser:
             abort(make_response(
                 jsonify({'error': 'laststname cannot contain spaces and must be a string',
                          'status': 400}), 400))
+
+
+def encode_token(user_email):
+    """
+    Generates authentication jwt token
+    :param user_email:
+
+    """
+    try:
+        payload = {
+            # JWT expiration time
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24),
+            # issued at
+            'iat': datetime.datetime.utcnow(),
+            # token user info
+            'sub': user_email
+        }
+        return jwt.encode(payload, app.config['SECRET'],
+                          algorithm='HS256')
+    except Exception as e:
+        return e
+
+
+def protected_route(f):
+    """
+    Decorator to protect routes
+    """
+    @wraps(f)
+    def inner_func(*args, **kwargs):
+        token = None
+        if 'Authorization' in request.headers:
+            token = request.headers['Authorization']
+        if not token:
+            return jsonify({'status': 401,
+                            'error': 'Token is missing'}), 401
+        try:
+            data = jwt.decode(
+                token, app.config['SECRET'], algorithms=['HS256'])
+            current_user = User.query.filter_by(email=data['sub'])
+        except jwt.ExpiredSignatureError:
+            return jsonify({'status': 401,
+                            'error': 'Token signature expired. Please login'}), 401
+        except jwt.InvalidTokenError:
+            return jsonify({'status': 401,
+                            'error': 'Invalid token. Please login again'}), 401
+        return f(current_user, *args, **kwargs)
+    return inner_func

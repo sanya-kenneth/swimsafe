@@ -1,7 +1,8 @@
 from validate_email import validate_email
 from api.auth.models import User
 from api.database.db import db
-from api.auth.utilities import validateUser
+from api.auth.utilities import validateUser, encode_token,\
+    protected_route
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash,\
                         check_password_hash
@@ -68,8 +69,9 @@ class UserController:
         if user_login_data:
             if user_login_data.email == user_email and \
                 check_password_hash(user_login_data.password, user_password):
+                access_token = encode_token(user_email, user_login_data.account_type)
                 return jsonify({'message': 'You are now loggedin',
-                'status': 200, 'access_token': 'coming soon'}), 200
+                'status': 200, 'access_token': access_token.decode('UTF-8'),
+                'account_type': user_login_data.account_type}), 200
         return jsonify({'error': 'Wrong email or password',
                         'status': 400}), 400
-        
