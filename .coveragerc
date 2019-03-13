@@ -1,0 +1,22 @@
+[report]
+
+omit =
+
+    */python?.?/*
+
+    */site-packages/nose/*
+
+    */__pycache__/*
+    
+    *.pyc
+    */home/travis/virtualenv/*
+    */venv/*
+    */app/__pycache__/*
+    */app/.pytest_cache/*
+    */.pytest_cache/*
+    */__pycache__/*
+    */venv/*
+    */.vscode/*
+    *pyc
+    *python
+    asyncio/*
