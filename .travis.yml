@@ -5,6 +5,7 @@ python:
 install:
   - pip install -r requirements.txt
   - pip install coveralls
+  - pip install codecov
 
 services:
   - postgresql
@@ -12,6 +13,7 @@ services:
 env:
   global:
     - SECRET='sddsdwejernefnbfbhejwjfjfjwjnd'
+    - CODECOV_TOKEN="7e24811e-44f3-4ae0-b6a7-2f8897dfa3b9"
 
 before_script:
   - psql -c 'CREATE DATABASE test_swimsafe;' -U postgres 
@@ -23,3 +25,4 @@ script:
 
 after_success:
   - coveralls
+  - codecov
