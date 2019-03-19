@@ -43,10 +43,9 @@ class BaseTest(unittest.TestCase):
 
     def get_user_token(self):
         user_data = {
-                "firstname":"ten",
-                "lastname":"10",
+                "names":"ten ziean",
                 "email":"ten@you.com",
-                "phonenumber": 706578719,
+                "phonenumber": "706578719",
                 "password": "dlkjhgfdfghjjhgf88",
                 "confirmpassword":"dlkjhgfdfghjjhgf88"
 	

@@ -6,3 +6,4 @@ api/auth/__pycache__/
 api/pools/__pycache__/
 api/database/__pycache__/
 __pycache__/
+.coverage

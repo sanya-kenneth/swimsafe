@@ -15,13 +15,27 @@ class validateUser:
     @staticmethod
     def validate_names(name):
         """method validates user's names """
-        return isinstance(name, str) and not re.search(r'[\s]', name)
+        return isinstance(name[0], str) and isinstance(name[1], str) and\
+            not re.search(r'[\s]', name[0]) and not re.search(r'[\s]', 
+                                                              name[1])
 
 
     def validate_phoneNumber(self, number):
         """method validates user's phone number """
-        return isinstance(number, int) and len(str(number)) < 14 and\
+        return isinstance(number, str) and len(str(number)) < 14 and\
             len(str(number)) >= 9
+
+
+    def remove_zero_from_number(self, number):
+        temp_string = str(number)
+        if temp_string[0] == '0':
+            new = temp_string[1:]
+            try:
+                int(new)
+            except:
+                abort(make_response(
+                    jsonify({'error': 'Only numbers allowed for the phonenumber field',
+                            'status': 400}), 400))
 
 
     def validate_password(self, password):
@@ -38,17 +52,14 @@ class validateUser:
         return password1 == password2 
 
 
-    def check_missing_field(self, firstname, lastname,
-                            email, phonenumber,password,
+    def check_missing_field(self, names, email, 
+                            phonenumber,password,
                             confirmpasswd):
         """
         Methods checks if a field is missing from the required fields
         """
-        if not firstname:
-            abort(make_response(jsonify({'error': 'firstname is missing',
-                                         'status': 400}), 400))
-        if not lastname:
-            abort(make_response(jsonify({'error': 'lastname is missing',
+        if not names:
+            abort(make_response(jsonify({'error': 'You must provide your names to proceed',
                                          'status': 400}), 400))
         if not email:
             abort(make_response(jsonify({'error': 'email is missing',
@@ -65,15 +76,26 @@ class validateUser:
                          'status': 400}), 400))
 
 
-    def check_names(self, firstname, lastname):
+    def check_split_names(self, names):
+        if len(names) < 2:
+            abort(make_response(
+                jsonify({'error': 'Please provide your lastname',
+                         'status': 400}), 400))
+        if len(names) > 2:
+            abort(make_response(
+                jsonify({'error': 'Only firstname and lastname are required for this field',
+                         'status': 400}), 400))
+
+
+    def check_names(self, names):
         """
         Checks is the firstname and lastname are valid
         """
-        if not validateUser.validate_names(firstname):
+        if not validateUser.validate_names(names[0]):
             abort(make_response(
                 jsonify({'error': 'firstname cannot contain spaces and must be a string',
                          'status': 400}), 400))
-        if not validateUser.validate_names(lastname):
+        if not validateUser.validate_names(names[1]):
             abort(make_response(
                 jsonify({'error': 'laststname cannot contain spaces and must be a string',
                          'status': 400}), 400))

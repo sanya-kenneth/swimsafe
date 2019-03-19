@@ -14,18 +14,24 @@ class UserController:
 
     def signup_user(self):
         data = request.get_json()
-        firstname = data.get('firstname')
-        lastname = data.get('lastname')
+        # firstname = data.get('firstname')
+        names = data.get('names')
         email = data.get('email')
         phone_number = data.get('phonenumber')
         password = data.get('password')
         confirm_password = data.get('confirmpassword')
         user_validate = validateUser()
         # Check missing fields
-        user_validate.check_missing_field(firstname, lastname, email,
+        user_validate.check_missing_field(names, email,
                                 phone_number, password, confirm_password)
+        # seperate firstname and lastname
+        split_names = names.split()
+        # check split names
+        user_validate.check_split_names(split_names)
+        first_name = split_names[0]
+        last_name = split_names[1]
         # validate names
-        user_validate.check_names(firstname, lastname)
+        user_validate.check_names(split_names)
         # validate email
         if not validate_email(email, verify=False):
             return jsonify({'error': 'Email is not valid',
@@ -34,6 +40,7 @@ class UserController:
         if not user_validate.validate_phoneNumber(phone_number):
             return jsonify({'error': 'Phone number is not valid',
                             'status': 400}), 400
+        user_validate.remove_zero_from_number(phone_number)
         # valid password
         if not user_validate.validate_password(password):
             return jsonify({
@@ -47,7 +54,7 @@ class UserController:
         # hash the password to protect it
         password = generate_password_hash(password)
         # create the user
-        user_data = User(firstname=firstname, lastname=lastname,
+        user_data = User(firstname=first_name, lastname=last_name,
                         email=email, phone_number=phone_number,
                         password=password, account_type="normal")
         try:

@@ -6,9 +6,9 @@ import json
 class UserTests(BaseTest):
     def test_returns_error_if_firstname_is_missing(self):
         data = {
-                "lastname":"10",
+                "names":"",
                 "email":"ken@you.com",
-                "phonenumber": 706578719,
+                "phonenumber": "706578719",
                 "password": "dfghjklkjhg3434",
                 "confirmpassword":"dfghjklkjhg3434"
                 
@@ -17,14 +17,14 @@ class UserTests(BaseTest):
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
         self.assertEqual(res.status_code,400)
-        self.assertEqual(response_data['error'], "firstname is missing")
+        self.assertEqual(response_data['error'], "You must provide your names to proceed")
 
 
     def test_returns_error_if_lastname_is_missing(self):
         data = {
-                "firstname": "ken",
+                "names": "ken",
                 "email":"ken@you.com",
-                "phonenumber": 706578719,
+                "phonenumber": "706578719",
                 "password": "dfghjklkjhg3434",
                 "confirmpassword":"dfghjklkjhg3434"
                 
@@ -33,14 +33,13 @@ class UserTests(BaseTest):
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
         self.assertEqual(res.status_code,400)
-        self.assertEqual(response_data['error'], "lastname is missing")
+        self.assertEqual(response_data['error'], "Please provide your lastname")
 
 
     def test_returns_error_if_email_is_missing(self):
         data = {
-                "firstname": "ken",
-                "lastname": "ken",
-                "phonenumber": 706578719,
+                "names": "ken sanya",
+                "phonenumber": "706578719",
                 "password": "dfghjklkjhg3434",
                 "confirmpassword":"dfghjklkjhg3434"
                 
@@ -54,8 +53,7 @@ class UserTests(BaseTest):
 
     def test_returns_error_if_phonenumber_is_missing(self):
         data = {
-                "firstname": "ken",
-                "lastname": "ken",
+                "names": "ken sanya",
                 "email":"ken@you.com",
                 "password": "dfghjklkjhg3434",
                 "confirmpassword":"dfghjklkjhg3434"
@@ -70,9 +68,8 @@ class UserTests(BaseTest):
 
     def test_returns_error_if_password_is_missing(self):
         data = {
-                "firstname": "ken",
-                "lastname": "ken",
-                "phonenumber": 706578719,
+                "names": "ken sanya",
+                "phonenumber": "706578719",
                 "email":"ken@you.com",
                 "confirmpassword":"dfghjklkjhg3434"
                 
@@ -86,9 +83,8 @@ class UserTests(BaseTest):
 
     def test_returns_error_if_passwords_dont_match(self):
         data = {
-                "firstname": "ken",
-                "lastname": "ken",
-                "phonenumber": 706578719,
+                "names": "ken sanya",
+                "phonenumber": "706578719",
                 "email":"ken@you.com",
                 "password":"dfghjklkjhg3434",
                 "confirmpassword":"dfghjklkjhg3434dfghjkjgfdfgh12332"
@@ -103,10 +99,9 @@ class UserTests(BaseTest):
 
     def test_user_can_signup(self):
         data = {
-                "firstname": "ken",
-                "lastname":"10",
+                "names": "ken sanya",
                 "email":"ken@you.com",
-                "phonenumber": 706578719,
+                "phonenumber": "706578719",
                 "password": "dfghjklkjhg3434",
                 "confirmpassword":"dfghjklkjhg3434"
                 }
@@ -119,10 +114,9 @@ class UserTests(BaseTest):
 
     def test_user_can_login(self):
         data = {
-                "firstname": "pen",
-                "lastname":"10",
+                "names": "pen youan",
                 "email":"pen@you.com",
-                "phonenumber": 706578718,
+                "phonenumber": "706578718",
                 "password": "dfghjklkjhg343411111",
                 "confirmpassword":"dfghjklkjhg343411111"
                 
