@@ -1,4 +1,3 @@
-from flask import jsonify
 from api.auth import auth_bp
 # from api.auth.models import User
 from api.auth.controllers import UserController
@@ -29,3 +28,9 @@ def get_all_users(current_user):
 @protected_route
 def get_one_user(current_user):
     return user.fetch_user(current_user)
+
+
+@auth_bp.route('/user', methods=['PUT'])
+@protected_route
+def update_user_info(current_user):
+    return user.edit_user_info(current_user)
