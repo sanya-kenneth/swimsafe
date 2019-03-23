@@ -59,8 +59,9 @@ class validateUser:
         Methods checks if a field is missing from the required fields
         """
         if not names:
-            abort(make_response(jsonify({'error': 'You must provide your names to proceed',
-                                         'status': 400}), 400))
+            abort(make_response(jsonify({
+                'error': 'You must provide your names to proceed',
+                'status': 400}), 400))
         if not email:
             abort(make_response(jsonify({'error': 'email is missing',
                                          'status': 400}), 400))
@@ -83,8 +84,24 @@ class validateUser:
                          'status': 400}), 400))
         if len(names) > 2:
             abort(make_response(
-                jsonify({'error': 'Only firstname and lastname are required for this field',
-                         'status': 400}), 400))
+                jsonify({
+                    'error': 'Only firstname and lastname are required for this field',
+                    'status': 400
+                    }), 400))
+
+
+    def check_user_is_loggedin(self, current_user):
+        if not current_user:
+            abort(make_response(jsonify({'error': 'You are not loggedin',
+                            'status': 403}), 403))
+
+
+    def is_admin_user(self, current_user):
+        if current_user.account_type != 'admin':
+            abort(make_response(jsonify({'error':
+                            'You are not allowed to perform this action',
+                            'status': 403
+                            }), 403))
 
 
     def check_names(self, names):
