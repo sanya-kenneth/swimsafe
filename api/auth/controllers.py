@@ -36,22 +36,22 @@ class UserController:
         user_validate.check_names(split_names)
         # validate email
         if not validate_email(email, verify=False):
-            return jsonify({'error': 'Email is not valid',
+            return jsonify({'message': 'Email is not valid',
                             'status': 400}), 400
         # validate phonenumber
         if not user_validate.validate_phoneNumber(phone_number):
-            return jsonify({'error': 'Phone number is not valid',
+            return jsonify({'message': 'Phone number is not valid',
                             'status': 400}), 400
         user_validate.remove_zero_from_number(phone_number)
         # valid password
         if not user_validate.validate_password(password):
             return jsonify({
-                'error': 'Password should be atleast 8 characters and should atleast one number',
+                'message': 'Password should be atleast 8 characters and should atleast one number',
                 'status': 400
             }), 400
         # check if passwords match
         if not user_validate.verify_password(password, confirm_password):
-            return jsonify({'error': "Passwords don't match",
+            return jsonify({'message': "Passwords don't match",
                             'status': 400}), 400
         # hash the password to protect it
         password = generate_password_hash(password)
@@ -63,7 +63,7 @@ class UserController:
             db.session.add(user_data)
             db.session.commit()
         except:
-            return jsonify({'error': 'User account already exists', 
+            return jsonify({'message': 'User account already exists', 
                             'status': 400}), 400
         return jsonify({'message': 'Your account was successfuly created',
                         'status': 201}), 201
@@ -73,6 +73,9 @@ class UserController:
         login_data = request.get_json()
         user_email = login_data.get('email')
         user_password = login_data.get('password')
+        if not user_email or not user_password:
+            return jsonify({'message': 'email and password fields are required',
+                            'status': 400}), 400
         user_login_data = User.query.filter_by(email=user_email).first()
         if user_login_data:
             if user_login_data.email == user_email and \
@@ -81,7 +84,7 @@ class UserController:
                 return jsonify({'message': 'You are now loggedin',
                 'status': 200, 'access_token': access_token.decode('UTF-8'),
                 'account_type': user_login_data.account_type}), 200
-        return jsonify({'error': 'Wrong email or password',
+        return jsonify({'message': 'Wrong email or password',
                         'status': 400}), 400
     
 
@@ -92,7 +95,7 @@ class UserController:
         user_validate.is_admin_user(current_user)
         display_list = []
         keys = ['userid', 'firstname', 'lastname', 'email', 'phonenumber',
-        'account_type']
+                'account_type']
         user_list = User.query.all()
         for user_item in user_list:
             details = [user_item.user_id, user_item.firstname,
@@ -138,7 +141,6 @@ class UserController:
             user_query.lastname = user_query.lastname
             db.session.commit()
         if not useremail:
-            # user_query.email = user_query.email
             setattr(user_query, "email", user_query.email)
             db.session.commit()
         if not phonenumber:
@@ -159,21 +161,21 @@ class UserController:
         # Validate user firstame
         if f_name is not None:
             if not isinstance(f_name, str):
-                return jsonify({'error': 'first name provided is not valid',
+                return jsonify({'message': 'first name provided is not valid',
                                 'status': 400}), 400
             # update firstname if provided
             self.update_user_data(fetch_user, "firstname", f_name)
         # Validate user lastname
         if l_name is not None:
             if not isinstance(l_name, str):
-                return jsonify({'error': 'last name provided is not valid',
+                return jsonify({'message': 'last name provided is not valid',
                                 'status': 400}), 400
             # update lastname if provided
             self.update_user_data(fetch_user, "lastname", l_name)
         # validate email
         if user_email is not None:
             if not validate_email(user_email, verify=False):
-                return jsonify({'error': 'Email is not valid',
+                return jsonify({'message': 'Email is not valid',
                                 'status': 400}), 400
             # update user email if provided
             self.update_user_data(fetch_user, "email", user_email)

@@ -8,7 +8,8 @@ class BaseConfig:
     TESTING = False
     SECRET = os.getenv('SECRET')
     SQLALCHEMY_DATABASE_URI = 'postgres://postgres:psql@localhost:5432/swimsafe'
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
+    WHOOSH_BASE = 'whoosh'
 
 
 class DevelopmentConfig(BaseConfig):

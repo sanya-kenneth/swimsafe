@@ -33,3 +33,9 @@ def update_pool_info(current_user, pool_id):
 @protected_route
 def delete_pool(current_user, pool_id):
     return pool.delete_pool_info(current_user, pool_id)
+
+
+@pools_bp.route('/pools/search', methods=['POST'])
+@protected_route
+def search_for_pools(current_user):
+    return pool.search_pools()
