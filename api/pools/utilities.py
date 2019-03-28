@@ -12,7 +12,7 @@ class ValidatePools:
 
     def validate_pool_name(self, pool_name):
         if not isinstance(pool_name, str):
-            response = {'error': 'Pool name is not valid',
+            response = {'message': 'Pool name is not valid',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
@@ -20,7 +20,7 @@ class ValidatePools:
 
     def validate_pool_address(self, pool_address):
         if not isinstance(pool_address, str):
-            response = {'error': 'Pool address is not valid',
+            response = {'message': 'Pool address is not valid',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
@@ -28,12 +28,12 @@ class ValidatePools:
 
     def validate_location(self, lat_value, long_value):
         if not isinstance(lat_value, float):
-            response = {'error': 'Location Lat cordinate is not valid',
+            response = {'message': 'Location Lat cordinate is not valid',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not isinstance(long_value, float):
-            response = {'error': 'Location Long cordinate is not valid',
+            response = {'message': 'Location Long cordinate is not valid',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
@@ -46,58 +46,58 @@ class ValidatePools:
         description, cost, available
         """
         if not args[0]:
-            response = {'error': 'Pool name field is missing or empty',
+            response = {'message': 'Pool name field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not args[1]:
-            response = {'error': 'Pool address field is missing or empty',
+            response = {'message': 'Pool address field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not args[2]:
-            response = {'error': 'Location lattitude cordinate field is missing or empty',
+            response = {'message': 'Location lattitude cordinate field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not args[3]:
-            response = {'error': 'Location longitude field is missing or empty',
+            response = {'message': 'Location longitude field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not args[4]:
-            response = {'error': 'Pool opening time field is missing or empty',
+            response = {'message': 'Pool opening time field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not args[5]:
-            response = {'error': 'Pool closing time field is missing or empty',
+            response = {'message': 'Pool closing time field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not args[6]:
-            response = {'error': 'Pool size field is missing or empty',
+            response = {'message': 'Pool size field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not args[7]:
-            response = {'error': 'Pool depth field is missing or empty',
+            response = {'message': 'Pool depth field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not args[8]:
-            response = {'error': 'Pool description field is missing or empty',
+            response = {'message': 'Pool description field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
         if not args[9]:
-            response = {'error': 'Pool cost field is missing or empty',
+            response = {'message': 'Pool cost field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)
 
         if not args[10]:
-            response = {'error': 'Pool availability field is missing or empty',
+            response = {'message': 'Pool availability field is missing or empty',
                         'status': 400}
             response_status = 400
             ValidatePools.response(response, response_status)

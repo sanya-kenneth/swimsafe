@@ -2,8 +2,9 @@ from api.database.db import db
 
 
 class Pool(db.Model):
+    __searchable__ = ['pool_name', 'pool_address']
     pool_id = db.Column('pool_id', db.Integer, primary_key=True)
-    pool_name = db.Column('name', db.String(80), nullable=False, unique=True)
+    pool_name = db.Column('pool_name', db.String(80), nullable=False, unique=True)
     pool_address = db.Column('address', db.String(100), nullable=False)
     location_lat = db.Column('location_lat', db.Float, nullable=False)
     location_long = db.Column('location_long', db.Float, nullable=False)

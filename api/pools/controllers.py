@@ -2,8 +2,11 @@ from flask import jsonify, request, abort,\
     make_response
 from api.database.db import db
 from api.pools.models import Pool
+from api.auth.models import User
 from api.pools.utilities import ValidatePools
 from api.auth.utilities import validateUser
+from flask import current_app as app
+from flask_whooshalchemyplus import index_all
 
 
 validate_user = validateUser()
@@ -55,7 +58,7 @@ class PoolController:
             db.session.add(new_pool)
             db.session.commit()
         except:
-            return jsonify({'error': 'Swimming pool already registered',
+            return jsonify({'message': 'Swimming pool already registered',
                             'status': 400}), 400
         return jsonify({'message': 'Swimming pool was successfuly added',
                         'status': 201}), 201
@@ -88,7 +91,7 @@ class PoolController:
         try:
             int(id)
         except:
-            return abort(make_response(jsonify({'error': 'Pool id must be a valid number',
+            return abort(make_response(jsonify({'message': 'Pool id must be a valid number',
                                                 'status': 400}), 400))
 
 
@@ -262,9 +265,29 @@ class PoolController:
         validate_user.is_admin_user(current_user)
         delete_pointer = Pool.query.filter_by(pool_id=pool_id).first()
         if not delete_pointer:
-            return jsonify({'error': 'Swimming pool doesnot exist',
+            return jsonify({'message': 'Swimming pool doesnot exist',
                             'status': 404}), 404
         db.session.delete(delete_pointer)
         db.session.commit()
         return jsonify({'message': 'Swimming pool deleted successfuly',
                         'status': 204}), 204
+
+
+    def search_pools(self):
+        data = request.get_json()
+        search_query = data.get('search')
+        index_all(app)
+        search_result = Pool.query.whoosh_search(search_query).all()
+        hold = []
+        keys = ["pool_id", "pool_name", "pool_address", "location_lat",
+                "location_long", "opening_time", "closing_time", "size",
+                "depth", "description", "cost", "availale"]
+        for result in search_result:
+            info = [result.pool_id, result.pool_name, result.pool_address,
+                    result.location_lat, result.location_long, result.opening_time,
+                    result.closing_time, result.size, result.depth, result.description,
+                    result.cost, result.available]
+            hold.append(dict(zip(keys, info)))
+        if not hold:
+            return jsonify({'message': 'No match found', 'status': 404}), 404
+        return jsonify({'data': hold, 'status': 200}), 200
