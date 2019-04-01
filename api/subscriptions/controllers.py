@@ -57,7 +57,9 @@ class subscriptionController:
         if current_user.account_type == "admin":
                 return jsonify({'message': 'You are not allowed to perform this action',
                                 'status': 403}), 403
-        user_pools = Subscribe.query.filter_by(user_id=current_user.user_id)
+        user_pools = Subscribe.query.filter_by(user_id=current_user.user_id).first()
+        if not user_pools:
+            return jsonify({'message': 'No subscriptions found', 'status': 404}), 404
         pool_keys = ['pool_id', 'pool_name', 'pool_address', 'location_lat',
                      'location_long', 'opening_time', 'closing_time', 'size',
                      'depth', 'description', 'cost', 'availability']
@@ -70,8 +72,7 @@ class subscriptionController:
                              get_pool.closing_time, get_pool.size, get_pool.depth,
                              get_pool.description, get_pool.cost, get_pool.available]
                 hold_subs.append(dict(zip(pool_keys, pool_info)))
-            return jsonify({'data': hold_subs, 'status': 200}), 200
-        return jsonify({'message': 'No subscriptions found', 'status': 404}), 404
+        return jsonify({'data': hold_subs, 'status': 200}), 200
 
 
     def get_subscribers(self, current_user, pool_id):
@@ -79,4 +80,18 @@ class subscriptionController:
         returns all users who have subscribed to a
         swimming pool
         """
-        pass
+        valid_user.check_user_is_loggedin(current_user)
+        valid_user.is_admin_user(current_user)
+        subscribers = Subscribe.query.filter_by(pool_id=pool_id).first()
+        user_keys = ["user_id", "firstname", "lastname", "email",
+                     "phone_number"]
+        hold_users = []
+        if not subscribers:
+            return jsonify({'message': 'No subscribers found',
+                            'status': 404}), 404
+        for user_sub in subscribers:
+            get_user = User.query.filter_by(user_id=user_sub.user_id).first()
+            user_info = [get_user.user_id, get_user.firstname, get_user.lastname,
+                        get_user.email, get_user.phone_number]
+            hold_users.append(dict(zip(user_keys, user_info)))
+        return jsonify({'data': hold_users, 'status': 200}), 200
