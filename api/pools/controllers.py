@@ -277,7 +277,10 @@ class PoolController:
         data = request.get_json()
         search_query = data.get('search')
         index_all(app)
-        search_result = Pool.query.whoosh_search(search_query).all()
+        try:
+            search_result = Pool.query.whoosh_search(search_query).all()
+        except:
+            return jsonify({'message': 'No match found', 'status': 404}), 404
         hold = []
         keys = ["pool_id", "pool_name", "pool_address", "location_lat",
                 "location_long", "opening_time", "closing_time", "size",
@@ -288,6 +291,4 @@ class PoolController:
                     result.closing_time, result.size, result.depth, result.description,
                     result.cost, result.available]
             hold.append(dict(zip(keys, info)))
-        if not hold:
-            return jsonify({'message': 'No match found', 'status': 404}), 404
         return jsonify({'data': hold, 'status': 200}), 200

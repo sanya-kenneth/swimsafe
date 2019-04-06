@@ -7,7 +7,6 @@ from api.subscriptions.views import subs_bp
 from api.database.db import db
 from flask_migrate import Migrate
 from api.auth.admin import create_admin
-import flask_whooshalchemyplus
 
 
 def create_app(config_name):
@@ -26,7 +25,6 @@ def create_app(config_name):
     app_context = app.app_context()
     app_context.push()
     create_admin()
-    flask_whooshalchemyplus.init_app(app)
     # Register blueprints to the api
     app.register_blueprint(auth_bp, url_prefix='/api/v1')
     app.register_blueprint(pools_bp, url_prefix='/api/v1')

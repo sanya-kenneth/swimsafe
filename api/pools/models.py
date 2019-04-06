@@ -1,8 +1,9 @@
 from api.database.db import db
+import flask_whooshalchemyplus
 
 
 class Pool(db.Model):
-    __searchable__ = ['pool_name', 'pool_address']
+    __searchable__ = ['pool_name']
     pool_id = db.Column('pool_id', db.Integer, primary_key=True)
     pool_name = db.Column('pool_name', db.String(80), nullable=False, unique=True)
     pool_address = db.Column('address', db.String(100), nullable=False)
@@ -21,3 +22,4 @@ class Pool(db.Model):
 
     def __repr__(self):
         return 'Pool %r' % self.pool_name
+
