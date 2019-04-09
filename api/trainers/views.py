@@ -33,3 +33,9 @@ def get_trainer(current_user, trainer_id):
 @protected_route
 def get_trainers(current_user):
     return trainer.get_trainers(current_user)
+
+
+@trainer_bp.route('trainers/pool/<pool_id>', methods=['GET'])
+@protected_route
+def fetch_trainers_attached_to_pool(current_user, pool_id):
+    return trainer.get_trainers_attached_to_pool(current_user, pool_id)

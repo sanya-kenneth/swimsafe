@@ -167,3 +167,25 @@ class TrainerController:
                                trainer_item.pool_id]
             trainer_list.append(dict(zip(trainer_keys, trainer_details)))
         return jsonify({'data': trainer_list, 'status': 200}), 200
+
+
+    def get_trainers_attached_to_pool(self, current_user, pool_id):
+        """
+        method returns all trainers who are attached to a given swimming
+        pool
+        """
+        user_valid.check_user_is_loggedin(current_user)
+        trainers_fetched = Trainer.query.filter_by(pool_id=pool_id).all()
+        if not trainers_fetched:
+            return jsonify({'message': 'No trainers found for that swimming pool',
+                            'status': 404}), 404
+        result_list = []
+        t_keys = ['trainer_id', 'firstname', 'lastname', 'working_time',
+                        'description', 'availability', 'pool_id']
+        for individual_trainer in trainers_fetched:
+            t_details = [individual_trainer.trainer_id, individual_trainer.first_name,
+            individual_trainer.last_name, individual_trainer.working_time, 
+            individual_trainer.description, individual_trainer.available,
+            individual_trainer.pool_id]
+            result_list.append(dict(zip(t_keys, t_details)))
+        return jsonify({'data': result_list, 'status': 200}), 200
