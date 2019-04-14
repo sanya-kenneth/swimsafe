@@ -59,16 +59,17 @@ class UserController:
                             'status': 400}), 400
         # hash the password to protect it
         password = generate_password_hash(password)
+        # check if user exists
+        user_info = User.query.filter_by(email=email).first()
+        if user_info:
+            return jsonify({'message': 'User account already exists', 
+                            'status': 400}), 400
         # create the user
         user_data = User(firstname=first_name, lastname=last_name,
                         email=email, phone_number=phone_number,
                         password=password, account_type="normal")
-        try:
-            db.session.add(user_data)
-            db.session.commit()
-        except:
-            return jsonify({'message': 'User account already exists', 
-                            'status': 400}), 400
+        db.session.add(user_data)
+        db.session.commit()
         return jsonify({'message': 'Your account was successfuly created',
                         'status': 201}), 201
 
