@@ -22,8 +22,8 @@ class validateUser:
 
     def validate_phoneNumber(self, number):
         """method validates user's phone number """
-        return isinstance(number, str) and len(str(number)) < 14 and\
-            len(str(number)) >= 9
+        return len(number) < 14 and\
+            len(number) >= 9
 
 
     def remove_zero_from_number(self, number):
@@ -32,6 +32,7 @@ class validateUser:
             new = temp_string[1:]
             try:
                 int(new)
+                return new
             except:
                 abort(make_response(
                     jsonify({'message': 'Only numbers allowed for the phonenumber field',

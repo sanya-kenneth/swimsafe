@@ -11,13 +11,13 @@ class UserTests(BaseTest):
                 "phonenumber": "706578719",
                 "password": "dfghjklkjhg3434",
                 "confirmpassword":"dfghjklkjhg3434"
-                
+
             }
         res = self.app.post('/api/v1/users', content_type="application/json",
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
         self.assertEqual(res.status_code,400)
-        self.assertEqual(response_data['error'], "You must provide your names to proceed")
+        self.assertEqual(response_data['message'], "You must provide your names to proceed")
 
 
     def test_returns_error_if_lastname_is_missing(self):
@@ -33,7 +33,7 @@ class UserTests(BaseTest):
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
         self.assertEqual(res.status_code,400)
-        self.assertEqual(response_data['error'], "Please provide your lastname")
+        self.assertEqual(response_data['message'], "Please provide your lastname")
 
 
     def test_returns_error_if_email_is_missing(self):
@@ -48,7 +48,7 @@ class UserTests(BaseTest):
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
         self.assertEqual(res.status_code,400)
-        self.assertEqual(response_data['error'], "email is missing")     
+        self.assertEqual(response_data['message'], "email is missing")     
 
 
     def test_returns_error_if_phonenumber_is_missing(self):
@@ -63,7 +63,7 @@ class UserTests(BaseTest):
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
         self.assertEqual(res.status_code,400)
-        self.assertEqual(response_data['error'], "phonenumber is missing") 
+        self.assertEqual(response_data['message'], "phonenumber is missing") 
 
 
     def test_returns_error_if_password_is_missing(self):
@@ -78,7 +78,7 @@ class UserTests(BaseTest):
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
         self.assertEqual(res.status_code,400)
-        self.assertEqual(response_data['error'], "password is required")  
+        self.assertEqual(response_data['message'], "password is required")  
 
 
     def test_returns_error_if_passwords_dont_match(self):
@@ -94,7 +94,7 @@ class UserTests(BaseTest):
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
         self.assertEqual(res.status_code,400)
-        self.assertEqual(response_data['error'], "Passwords don't match") 
+        self.assertEqual(response_data['message'], "Passwords don't match") 
 
 
     def test_user_can_signup(self):

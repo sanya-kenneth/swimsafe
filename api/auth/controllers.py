@@ -42,7 +42,11 @@ class UserController:
         if not user_validate.validate_phoneNumber(phone_number):
             return jsonify({'message': 'Phone number is not valid',
                             'status': 400}), 400
-        user_validate.remove_zero_from_number(phone_number)
+        new_number = user_validate.remove_zero_from_number(phone_number)
+        if new_number:
+            phone_number = new_number
+        else:
+            phone_number = phone_number
         # valid password
         if not user_validate.validate_password(password):
             return jsonify({
