@@ -10,6 +10,7 @@ class BaseConfig:
     SQLALCHEMY_DATABASE_URI = 'postgres://postgres:psql@localhost:5432/swimsafe'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     WHOOSH_BASE = 'whoosh'
+    UPLOADED_PHOTOS_DEST = 'uploads'
 
 
 class DevelopmentConfig(BaseConfig):

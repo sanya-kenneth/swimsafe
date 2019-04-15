@@ -7,12 +7,19 @@ from api.subscriptions.views import subs_bp
 from api.database.db import db
 from flask_migrate import Migrate
 from api.auth.admin import create_admin
+from flask_uploads import configure_uploads
+from api.upload import photos
 
 
 def create_app(config_name):
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
+    # setup flask uploads
+    # app.config['UPLOADED_PHOTOS_DEST'] = 'uploads'
+    # configure_uploads(app)
+    app.config['UPLOADED_PHOTOS_DEST']
+    configure_uploads(app, photos)
     # SQLAlchemy setup with flask woosh alchemy for indexing
     app.config['SQLALCHEMY_DATABASE_URI']
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS']
