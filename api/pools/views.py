@@ -1,7 +1,7 @@
 from api.pools import pools_bp
 from api.pools.controllers import PoolController
 from api.auth.utilities import protected_route
-from api.upload import upload_file
+from api.helpers.upload import upload_file
 
 
 pool = PoolController()
@@ -42,7 +42,7 @@ def search_for_pools(current_user):
     return pool.search_pools()
 
 
-@pools_bp.route('/pools/upload', methods=['POST'])
+@pools_bp.route('/pools/upload/<pool_id>', methods=['POST'])
 @protected_route
-def upload_pic(current_user):
-    return upload_file()
+def upload_pic(current_user, pool_id):
+    return upload_file(current_user, pool_id=pool_id, table='pools')

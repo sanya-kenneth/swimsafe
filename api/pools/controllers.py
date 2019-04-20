@@ -28,7 +28,6 @@ class PoolController:
         closing_time = data.get('closing_time')
         size = data.get('size')
         depth = data.get('depth')
-        images = data.get('images')
         description = data.get('description')
         cost = data.get('cost')
         available = data.get('available')
@@ -42,7 +41,7 @@ class PoolController:
         pool_class_kwargs = dict(pool_name=pool_name, pool_address=pool_address,
                                  location_lat=location_lat, location_long=location_long,
                                  opening_time=opening_time, closing_time=closing_time,
-                                 size=size, depth=depth, images=images, description=description,
+                                 size=size, depth=depth, description=description,
                                  cost=cost, available=available)
         # unpack the check_missing_fields validation method
         pool_validator.check_missing_fields(*field_args)
@@ -77,7 +76,7 @@ class PoolController:
                             pool_item.pool_address, pool_item.location_lat,
                             pool_item.location_long, pool_item.opening_time,
                             pool_item.closing_time, pool_item.size, pool_item.depth,
-                            pool_item.images, pool_item.description, pool_item.cost,
+                            pool_item.description, pool_item.cost,
                             pool_item.available]
             pool_list.append(dict(zip(pool_keys, pool_details)))
         return jsonify({'data': pool_list, 'status': 200}), 200
@@ -111,7 +110,6 @@ class PoolController:
             'closing_time': fetch_pool.closing_time,
             'size': fetch_pool.size,
             'depth': fetch_pool.depth,
-            'images': fetch_pool.images,
             'description': fetch_pool.description,
             'cost': fetch_pool.cost,
             'availability': fetch_pool.available
@@ -166,7 +164,6 @@ class PoolController:
             select_query.location_long = select_query.location_long
             db.session.commit()
         if not args[4]:
-            print(select_query.opening_time)
             select_query.opening_time = select_query.opening_time
             db.session.commit()
         if not args[5]:

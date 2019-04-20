@@ -10,6 +10,7 @@ class User(db.Model):
     phone_number = db.Column('phone_number',db.Text, nullable=False)
     password = db.Column('user_password',db.Text, unique=True, nullable=False)
     account_type = db.Column('account_type',db.String(20), nullable=False)
+    user_pic = db.Column('user_pic', db.Text, nullable=True)
 
     
     def __repr__(self):
