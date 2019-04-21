@@ -77,15 +77,15 @@ class PoolController:
         pool_list = []
         pool_keys = ['pool_id', 'pool_name', 'pool_address', 'location_lat',
                      'location_long', 'opening_time', 'closing_time', 'size',
-                     'depth', 'images', 'description', 'weekday_fee', 'weekend_fee',
-                     'availability']
+                     'depth', 'description', 'weekday_fee', 'weekend_fee',
+                     'availability', 'pool_thumbnail']
         for pool_item in fetch_pools:
             pool_details = [pool_item.pool_id, pool_item.pool_name,
                             pool_item.pool_address, pool_item.location_lat,
                             pool_item.location_long, pool_item.opening_time,
                             pool_item.closing_time, pool_item.size, pool_item.depth,
                             pool_item.description, pool_item.weekday_fee,
-                            pool_item.weekend_fee, pool_item.available]
+                            pool_item.weekend_fee, pool_item.available, pool_item.pool_thumbnail]
             pool_list.append(dict(zip(pool_keys, pool_details)))
         return jsonify({'data': pool_list, 'status': 200})
 
@@ -119,7 +119,8 @@ class PoolController:
             'description': fetch_pool.description,
             'weekday_fee': fetch_pool.weekday_fee,
             'weekdend_fee': fetch_pool.weekend_fee,
-            'availability': fetch_pool.available
+            'availability': fetch_pool.available,
+            'pool_thumbnail': fetch_pool.pool_thumbnail
         }
         return jsonify({'data': pool_display,
                         'status': 200})

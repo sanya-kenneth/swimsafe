@@ -5,6 +5,7 @@ from api.pools.views import pools_bp
 from api.trainers.views import trainer_bp
 from api.subscriptions.views import subs_bp
 from api.images.views import image_bp
+from api.children_pool.views import children_bp
 from api.database.db import db
 from flask_migrate import Migrate
 from api.auth.admin import create_admin
@@ -37,4 +38,5 @@ def create_app(config_name):
     app.register_blueprint(trainer_bp, url_prefix='/api/v1')
     app.register_blueprint(subs_bp, url_prefix='/api/v1')
     app.register_blueprint(image_bp, url_prefix='/api/v1')
+    app.register_blueprint(children_bp, url_prefix='/api/v1')
     return app
