@@ -10,6 +10,8 @@ from flask_whooshalchemyplus import index_all
 
 
 validate_user = validateUser()
+
+
 class PoolController:
     def __init__(self):
         pass
@@ -29,20 +31,22 @@ class PoolController:
         size = data.get('size')
         depth = data.get('depth')
         description = data.get('description')
-        cost = data.get('cost')
+        weekday_fee = data.get('weekday_fee')
+        weekend_fee = data.get('weekend_fee')
         available = data.get('available')
         # Initialize pool validator class
         pool_validator = ValidatePools()
         # store arguments for check_missing_fields validation method in a tupple
         field_args = (pool_name, pool_address, location_lat,
                       location_long, opening_time, closing_time, size,
-                      depth,  description, cost, available,)
+                      depth,  description, weekday_fee, weekend_fee, available,)
         # store key word arguments for initializing the Pool model class
         pool_class_kwargs = dict(pool_name=pool_name, pool_address=pool_address,
                                  location_lat=location_lat, location_long=location_long,
                                  opening_time=opening_time, closing_time=closing_time,
                                  size=size, depth=depth, description=description,
-                                 cost=cost, available=available)
+                                 weekday_fee=weekday_fee, weekend_fee=weekend_fee,
+                                 available=available)
         # unpack the check_missing_fields validation method
         pool_validator.check_missing_fields(*field_args)
         # validate pool name
@@ -51,36 +55,39 @@ class PoolController:
         pool_validator.validate_pool_address(pool_address)
         # validate pool location cordinates
         pool_validator.validate_location(location_lat, location_long)
+        # check if pool exists
+        pool_info = Pool.query.all()
+        if pool_info:
+            for pool_i in pool_info:
+                if pool_i.pool_name == pool_name:
+                    return jsonify({'message': 'Swimming pool already registered',
+                                    'status': 400})
         # unpack the pool class with key word arguments
         new_pool = Pool(**pool_class_kwargs)
-        try:
-            db.session.add(new_pool)
-            db.session.commit()
-        except:
-            return jsonify({'message': 'Swimming pool already registered',
-                            'status': 400}), 400
+        db.session.add(new_pool)
+        db.session.commit()
         return jsonify({'message': 'Swimming pool was successfuly added',
-                        'status': 201}), 201
+                        'status': 201})
 
     def fetch_all_pools(self):
         fetch_pools = Pool.query.all()
         if not fetch_pools:
             return jsonify({'message': 'There no pools registered yet',
-                            'status': 404}), 404
+                            'status': 404})
         pool_list = []
         pool_keys = ['pool_id', 'pool_name', 'pool_address', 'location_lat',
                      'location_long', 'opening_time', 'closing_time', 'size',
-                     'depth', 'images', 'description', 'cost', 'availability']
+                     'depth', 'images', 'description', 'weekday_fee', 'weekend_fee',
+                     'availability']
         for pool_item in fetch_pools:
             pool_details = [pool_item.pool_id, pool_item.pool_name,
                             pool_item.pool_address, pool_item.location_lat,
                             pool_item.location_long, pool_item.opening_time,
                             pool_item.closing_time, pool_item.size, pool_item.depth,
-                            pool_item.description, pool_item.cost,
-                            pool_item.available]
+                            pool_item.description, pool_item.weekday_fee,
+                            pool_item.weekend_fee, pool_item.available]
             pool_list.append(dict(zip(pool_keys, pool_details)))
-        return jsonify({'data': pool_list, 'status': 200}), 200
-
+        return jsonify({'data': pool_list, 'status': 200})
 
     def check_id(self, id):
         """
@@ -91,15 +98,14 @@ class PoolController:
             int(id)
         except:
             return abort(make_response(jsonify({'message': 'Pool id must be a valid number',
-                                                'status': 400}), 400))
-
+                                                'status': 400})))
 
     def fetch_one_pool(self, pool_id):
         self.check_id(pool_id)
         fetch_pool = Pool.query.get(pool_id)
         if not fetch_pool:
             return jsonify({'message': 'Swimming pool not found',
-                            'status': 404}), 404
+                            'status': 404})
         pool_display = {
             'pool_id': fetch_pool.pool_id,
             'pool_name': fetch_pool.pool_name,
@@ -111,12 +117,12 @@ class PoolController:
             'size': fetch_pool.size,
             'depth': fetch_pool.depth,
             'description': fetch_pool.description,
-            'cost': fetch_pool.cost,
+            'weekday_fee': fetch_pool.weekday_fee,
+            'weekdend_fee': fetch_pool.weekend_fee,
             'availability': fetch_pool.available
         }
         return jsonify({'data': pool_display,
-                        'status': 200}), 200
-
+                        'status': 200})
 
     def update_field(self, db_query, field, new_value):
         """
@@ -134,7 +140,6 @@ class PoolController:
         if field is not None:
             setattr(db_query, field, new_value)
             db.session.commit()
-            
 
     def set_initial_data(self, select_query, *args):
         """
@@ -179,12 +184,14 @@ class PoolController:
             select_query.description = select_query.description
             db.session.commit()
         if not args[9]:
-            select_query.cost = select_query.cost
+            select_query.weekday_fee = select_query.weekday_fee
             db.session.commit()
         if not args[10]:
+            select_query.weekend_fee = select_query.weekend_fee
+            db.session.commit()
+        if not args[11]:
             select_query.available = select_query.available
             db.session.commit()
-
 
     def edit_pool_info(self, current_user, pool_id):
         # check if the user is loggedin
@@ -203,16 +210,17 @@ class PoolController:
         size = data.get('size')
         depth = data.get('depth')
         description = data.get('description')
-        cost = data.get('cost')
+        weekday_fee = data.get('weekday_fee')
+        weekend_fee = data.get('weekend_fee')
         available = data.get('available')
         validate_pool = ValidatePools()
         hold_pools = Pool.query.filter_by(pool_id=pool_id).first()
         if not hold_pools:
             return jsonify({'message': 'Swimmig pool not found',
-                            'status': 404}), 404
-        field_tuple = (hold_pools, pool_name, pool_address, location_lat, location_long, 
-                        opening_time, closing_time, size, depth, description,
-                        cost, available)
+                            'status': 404})
+        field_tuple = (hold_pools, pool_name, pool_address, location_lat, location_long,
+                       opening_time, closing_time, size, depth, description,
+                       weekday_fee, weekend_fee, available)
         self.set_initial_data(*field_tuple)
         if pool_name is not None:
             validate_pool.validate_pool_name(pool_name)
@@ -223,11 +231,11 @@ class PoolController:
             # update pool address if a value is provided by the user
             self.update_field(hold_pools, "pool_address", pool_address)
         if location_lat is not None:
-            validate_pool.validate_location(location_lat,location_long)
+            validate_pool.validate_location(location_lat, location_long)
             # update pool lat cordinates if a value is provided by the user
             self.update_field(hold_pools, "location_lat", location_lat)
         if location_long is not None:
-            validate_pool.validate_location(location_lat,location_long)
+            validate_pool.validate_location(location_lat, location_long)
             # update pool long cordinates if a value is provided by the user
             self.update_field(hold_pools, "location_long", location_long)
         if opening_time is not None:
@@ -245,15 +253,17 @@ class PoolController:
         if description is not None:
             # update pool description if a value is provided by the user
             self.update_field(hold_pools, "description", description)
-        if cost is not None:
-            # update pool cost if a value is provided by the user
-            self.update_field(hold_pools, "cost", cost)
+        if weekday_fee is not None:
+            # update pool weekday_fee if a value is provided by the user
+            self.update_field(hold_pools, "weekday_fee", weekday_fee)
+        if weekend_fee is not None:
+            # update pool weekend_fee if a value is provided by the user
+            self.update_field(hold_pools, "weekend_fee", weekend_fee)
         if available is not None:
             # update pool availability if a value is provided by the user
             self.update_field(hold_pools, "available", available)
         return jsonify({'message': 'Update was successful',
-                        'status': 202}), 202
-
+                        'status': 202})
 
     def delete_pool_info(self, current_user, pool_id):
         # check if pool_id is valid
@@ -263,12 +273,11 @@ class PoolController:
         delete_pointer = Pool.query.filter_by(pool_id=pool_id).first()
         if not delete_pointer:
             return jsonify({'message': 'Swimming pool doesnot exist',
-                            'status': 404}), 404
+                            'status': 404})
         db.session.delete(delete_pointer)
         db.session.commit()
         return jsonify({'message': 'Swimming pool deleted successfuly',
-                        'status': 204}), 204
-
+                        'status': 204})
 
     def search_pools(self):
         data = request.get_json()
@@ -277,7 +286,7 @@ class PoolController:
         try:
             search_result = Pool.query.whoosh_search(search_query).all()
         except:
-            return jsonify({'message': 'No match found', 'status': 404}), 404
+            return jsonify({'message': 'No match found', 'status': 404})
         hold = []
         keys = ["pool_id", "pool_name", "pool_address", "location_lat",
                 "location_long", "opening_time", "closing_time", "size",
@@ -288,4 +297,4 @@ class PoolController:
                     result.closing_time, result.size, result.depth, result.description,
                     result.cost, result.available]
             hold.append(dict(zip(keys, info)))
-        return jsonify({'data': hold, 'status': 200}), 200
+        return jsonify({'data': hold, 'status': 200})
