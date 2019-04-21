@@ -3,6 +3,7 @@ python:
   - "3.6"
 
 install:
+  - pip install Flask-WhooshAlchemyPlus==0.7.4 
   - pip install -r requirements.txt
   - pip install coveralls
   - pip install codecov

@@ -6,7 +6,6 @@ Flask-Cors==3.0.7
 Flask-Migrate==2.4.0
 Flask-SQLAlchemy==2.3.2
 Flask-Uploads==0.2.1
-Flask-WhooshAlchemyPlus==0.7.4
 itsdangerous==1.1.0
 Jinja2==2.10
 Mako==1.0.8
