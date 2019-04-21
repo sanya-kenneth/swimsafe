@@ -291,11 +291,11 @@ class PoolController:
         hold = []
         keys = ["pool_id", "pool_name", "pool_address", "location_lat",
                 "location_long", "opening_time", "closing_time", "size",
-                "depth", "description", "cost", "availale"]
+                "depth", "description", "weekday_fee", "weekend_fee", "availale"]
         for result in search_result:
             info = [result.pool_id, result.pool_name, result.pool_address,
                     result.location_lat, result.location_long, result.opening_time,
                     result.closing_time, result.size, result.depth, result.description,
-                    result.cost, result.available]
+                    result.weekday_fee, result.weekend_fee, result.available]
             hold.append(dict(zip(keys, info)))
         return jsonify({'data': hold, 'status': 200})
