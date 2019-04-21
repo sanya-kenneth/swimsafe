@@ -36,7 +36,7 @@ class validateUser:
             except:
                 abort(make_response(
                     jsonify({'message': 'Only numbers allowed for the phonenumber field',
-                            'status': 400}), 400))
+                            'status': 400})))
 
 
     def validate_password(self, password):
@@ -62,39 +62,39 @@ class validateUser:
         if not names:
             abort(make_response(jsonify({
                 'message': 'You must provide your names to proceed',
-                'status': 400}), 400))
+                'status': 400})))
         if not email:
             abort(make_response(jsonify({'message': 'email is missing',
-                                         'status': 400}), 400))
+                                         'status': 400})))
         if not phonenumber:
             abort(make_response(jsonify({'message': 'phonenumber is missing',
-                                         'status': 400}), 400))
+                                         'status': 400})))
         if not password:
             abort(make_response(jsonify({'message': 'password is required',
-                                         'status': 400}), 400))
+                                         'status': 400})))
         if not confirmpasswd:
             abort(make_response(
                 jsonify({'message': 'You must confirm your password to proceed',
-                         'status': 400}), 400))
+                         'status': 400})))
 
 
     def check_split_names(self, names):
         if len(names) < 2:
             abort(make_response(
                 jsonify({'message': 'Please provide your lastname',
-                         'status': 400}), 400))
+                         'status': 400})))
         if len(names) > 2:
             abort(make_response(
                 jsonify({
                     'message': 'Only firstname and lastname are required for this field',
                     'status': 400
-                    }), 400))
+                    })))
 
 
     def check_user_is_loggedin(self, current_user):
         if not current_user:
             abort(make_response(jsonify({'message': 'You are not loggedin',
-                            'status': 403}), 403))
+                            'status': 403})))
 
 
     def is_admin_user(self, current_user):
@@ -102,7 +102,7 @@ class validateUser:
             abort(make_response(jsonify({'message':
                             'You are not allowed to perform this action',
                             'status': 403
-                            }), 403))
+                            })))
 
 
     def check_names(self, names):
@@ -112,11 +112,11 @@ class validateUser:
         if not validateUser.validate_names(names[0]):
             abort(make_response(
                 jsonify({'message': 'firstname cannot contain spaces and must be a string',
-                         'status': 400}), 400))
+                         'status': 400})))
         if not validateUser.validate_names(names[1]):
             abort(make_response(
                 jsonify({'message': 'laststname cannot contain spaces and must be a string',
-                         'status': 400}), 400))
+                         'status': 400})))
 
 
 def encode_token(user_email):
@@ -151,16 +151,16 @@ def protected_route(f):
             token = request.headers['Authorization']
         if not token:
             return jsonify({'status': 401,
-                            'message': 'Token is missing'}), 401
+                            'message': 'Token is missing'})
         try:
             data = jwt.decode(
                 token, app.config['SECRET'], algorithms=['HS256'])
             current_user = User.query.filter_by(email=data['sub']).first()
         except jwt.ExpiredSignatureError:
             return jsonify({'status': 401,
-                            'message': 'Token signature expired. Please login'}), 401
+                            'message': 'Token signature expired. Please login'})
         except jwt.InvalidTokenError:
             return jsonify({'status': 401,
-                            'message': 'Invalid token. Please login again'}), 401
+                            'message': 'Invalid token. Please login again'})
         return f(current_user, *args, **kwargs)
     return inner_func

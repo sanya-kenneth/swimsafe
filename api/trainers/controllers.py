@@ -45,13 +45,13 @@ class TrainerController:
                                 trainer_individual.last_name == trainer_lastname and\
                                 trainer_individual.description == trainer_description:
                                 return jsonify({'message': 'Trainer already exists',\
-                                                'status': 400}), 400
+                                                'status': 400})
                     db.session.add(add_trainer)
                     db.session.commit()
                     return jsonify({'message': 'Trainer was successfuly added',
-                                    'status': 201}), 201
+                                    'status': 201})
         return jsonify({'message': "Swimming pool was not found",
-                        'status': 404}), 404
+                        'status': 404})
 
     def edit_trainer_info(self, current_user, trainer_id):
         user_valid.check_user_is_loggedin(current_user)
@@ -66,13 +66,13 @@ class TrainerController:
         trainer_query = Trainer.query.filter_by(trainer_id=trainer_id).first()
         if not trainer_query:
             return jsonify({'message': 'Trainer not registered with us',
-                            'status': 404}), 404
+                            'status': 404})
         if trainer_f_name is not None:
             if not isinstance(trainer_f_name, str) or\
                 re.search(r'[\s]', trainer_f_name) or\
                 trainer_f_name == "":
                 return jsonify({'message': 'firstname must be a string with atleast 4 characters',
-                                'status': 400}), 400
+                                'status': 400})
             setattr(trainer_query, "first_name", trainer_f_name)
             db.session.commit()
         else:
@@ -83,7 +83,7 @@ class TrainerController:
                 re.search(r'[\s]', trainer_l_name) or\
                 trainer_l_name == "":
                 return jsonify({'message': 'lastname must be a string with atleast 4 characters',
-                                'status': 400}), 400
+                                'status': 400})
             setattr(trainer_query, "last_name", trainer_l_name)
             db.session.commit()
         else:
@@ -108,7 +108,7 @@ class TrainerController:
             trainer_query.available = trainer_query.available
             db.session.commit()
         return jsonify({'message': 'Trainer information updated successfuly',
-                        'status': 202}), 202
+                        'status': 202})
 
 
     def delete_trainer(self, current_user, trainer_id):
@@ -118,15 +118,15 @@ class TrainerController:
             int(trainer_id)
         except:
             return jsonify({'message': 'Trainer id must be a valid number',
-                            'status': 400}), 400
+                            'status': 400})
         remove_trainer = Trainer.query.filter_by(trainer_id=trainer_id).first()
         if not remove_trainer:
             return jsonify({'message': 'Trainer not found',
-                            'status': 404}), 404
+                            'status': 404})
         db.session.delete(remove_trainer)
         db.session.commit()
         return jsonify({'message': 'Trainer information was deleted',
-                        'status': 204}), 204
+                        'status': 204})
 
 
     def get_one_trainer(self, current_user, trainer_id):
@@ -138,7 +138,7 @@ class TrainerController:
                             'status': 400}), 400
         get_trainer = Trainer.query.filter_by(trainer_id=trainer_id).first()
         if not get_trainer:
-            return jsonify({'message': 'Trainer not found', 'status': 404}), 404
+            return jsonify({'message': 'Trainer not found', 'status': 404})
         trainer_data = dict(
             trainer_id = get_trainer.trainer_id,
             first_name = get_trainer.first_name,
@@ -148,7 +148,7 @@ class TrainerController:
             availability = get_trainer.available,
             pool_id = get_trainer.pool_id
         )
-        return jsonify({'data': trainer_data, 'status': 200}), 200
+        return jsonify({'data': trainer_data, 'status': 200})
 
 
     def get_trainers(self, current_user):
@@ -156,9 +156,9 @@ class TrainerController:
         get_trainers = Trainer.query.all()
         if not get_trainers:
             return jsonify({'message': 'There no trainers yet',
-                            'status': 404}), 404
+                            'status': 404})
         trainer_list = []
-        trainer_keys = ['trainer_id', 'firstname', 'lastname', 'working_time',
+        trainer_keys = ['trainer_id', 'first_name', 'last_name', 'working_time',
                         'description', 'availability', 'pool_id']
         for trainer_item in get_trainers:
             trainer_details = [trainer_item.trainer_id, trainer_item.first_name,
@@ -166,7 +166,7 @@ class TrainerController:
                                trainer_item.description, trainer_item.available,
                                trainer_item.pool_id]
             trainer_list.append(dict(zip(trainer_keys, trainer_details)))
-        return jsonify({'data': trainer_list, 'status': 200}), 200
+        return jsonify({'data': trainer_list, 'status': 200})
 
 
     def get_trainers_attached_to_pool(self, current_user, pool_id):
@@ -178,9 +178,9 @@ class TrainerController:
         trainers_fetched = Trainer.query.filter_by(pool_id=pool_id).all()
         if not trainers_fetched:
             return jsonify({'message': 'No trainers found for that swimming pool',
-                            'status': 404}), 404
+                            'status': 404})
         result_list = []
-        t_keys = ['trainer_id', 'firstname', 'lastname', 'working_time',
+        t_keys = ['trainer_id', 'first_name', 'last_name', 'working_time',
                         'description', 'availability', 'pool_id']
         for individual_trainer in trainers_fetched:
             t_details = [individual_trainer.trainer_id, individual_trainer.first_name,
@@ -188,4 +188,4 @@ class TrainerController:
             individual_trainer.description, individual_trainer.available,
             individual_trainer.pool_id]
             result_list.append(dict(zip(t_keys, t_details)))
-        return jsonify({'data': result_list, 'status': 200}), 200
+        return jsonify({'data': result_list, 'status': 200})
