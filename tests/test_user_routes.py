@@ -16,7 +16,7 @@ class UserTests(BaseTest):
         res = self.app.post('/api/v1/users', content_type="application/json",
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,400)
+        self.assertEqual(response_data['status'],400)
         self.assertEqual(response_data['message'], "You must provide your names to proceed")
 
 
@@ -32,7 +32,7 @@ class UserTests(BaseTest):
         res = self.app.post('/api/v1/users', content_type="application/json",
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,400)
+        self.assertEqual(response_data['status'],400)
         self.assertEqual(response_data['message'], "Please provide your lastname")
 
 
@@ -47,7 +47,7 @@ class UserTests(BaseTest):
         res = self.app.post('/api/v1/users', content_type="application/json",
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,400)
+        self.assertEqual(response_data['status'],400)
         self.assertEqual(response_data['message'], "email is missing")     
 
 
@@ -62,7 +62,7 @@ class UserTests(BaseTest):
         res = self.app.post('/api/v1/users', content_type="application/json",
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,400)
+        self.assertEqual(response_data['status'],400)
         self.assertEqual(response_data['message'], "phonenumber is missing") 
 
 
@@ -77,7 +77,7 @@ class UserTests(BaseTest):
         res = self.app.post('/api/v1/users', content_type="application/json",
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,400)
+        self.assertEqual(response_data['status'],400)
         self.assertEqual(response_data['message'], "password is required")  
 
 
@@ -93,7 +93,7 @@ class UserTests(BaseTest):
         res = self.app.post('/api/v1/users', content_type="application/json",
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,400)
+        self.assertEqual(response_data['status'],400)
         self.assertEqual(response_data['message'], "Passwords don't match") 
 
 
@@ -108,7 +108,7 @@ class UserTests(BaseTest):
         res = self.app.post('/api/v1/users', content_type="application/json",
         data=json.dumps(data))
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,201)
+        self.assertEqual(response_data['status'],201)
         self.assertEqual(response_data['message'], "Your account was successfuly created")
 
 
@@ -130,7 +130,7 @@ class UserTests(BaseTest):
         res = self.app.post('/api/v1/users/login', content_type="application/json",
                             data=json.dumps(user_data_login))
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,200)
+        self.assertEqual(response_data['status'],200)
         self.assertEqual(response_data['message'], "You are now loggedin")
 
 
@@ -138,7 +138,6 @@ class UserTests(BaseTest):
         res = self.app.get('/api/v1/user', content_type="application/json",
         headers=self.user_header())
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,200)
         self.assertEqual(response_data['status'], 200)
         self.assertIn("ten@you.com", response_data['data']['email'])
 
@@ -147,6 +146,5 @@ class UserTests(BaseTest):
         res = self.app.get('/api/v1/users', content_type="application/json",
         headers=self.admin_header())
         response_data = json.loads(res.data.decode())
-        self.assertEqual(res.status_code,200)
         self.assertEqual(response_data['status'], 200)
         self.assertIsInstance(response_data['data'], list)
