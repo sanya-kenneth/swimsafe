@@ -10,7 +10,8 @@ import os
 
 
 images = ('jpg', 'jpeg', 'png', 'gif')
-base_url = 'https://swimsafeapp.herokuapp.com/uploads'
+# base_url = 'https://swimsafeapp.herokuapp.com/uploads'
+base_url = 'http://127.0.0.1:5000/api/v1/uploads'
 
 
 # Initialise uploadset for pictures only
@@ -33,7 +34,9 @@ def upload_file(current_user, **kwargs):
         file_name = request.files['file']
         split_filename_and_extension = os.path.splitext(file_name.filename)
         file_extension = split_filename_and_extension[1]
-        file_url = base_url + '/' + file_name.filename
+        # file_url = app.root_path + '/' + app.config['UPLOADED_PHOTOS_DEST'] + '/' + file_name.filename
+        file_url = photos.url(file_name.filename)
+        print(file_url)
         if not file_extension[1:] in images:
             return jsonify({'message': 'Wrong file type. only jpg,jpeg,png and gif images are allowed',
                             'status': 400})

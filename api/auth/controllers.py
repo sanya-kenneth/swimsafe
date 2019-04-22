@@ -100,12 +100,12 @@ class UserController:
         user_validate.is_admin_user(current_user)
         display_list = []
         keys = ['userid', 'firstname', 'lastname', 'email', 'phonenumber',
-                'account_type']
+                'account_type', 'user_pic']
         user_list = User.query.all()
         for user_item in user_list:
             details = [user_item.user_id, user_item.firstname,
             user_item.lastname, user_item.email, user_item.phone_number,
-            user_item.account_type]
+            user_item.account_type, user_item.user_pic]
             display_list.append(dict(zip(keys, details)))
         if not user_list:
             return jsonify({'message': 'There are no users registered yet',
@@ -127,7 +127,8 @@ class UserController:
                         'lastname': get_user.lastname,
                         'email': get_user.email,
                         'phonenumber': get_user.phone_number,
-                        'account_type': get_user.account_type
+                        'account_type': get_user.account_type,
+                        'user_pic': get_user.user_pic
                       }
         return jsonify({'data': return_dict, 'status': 200})
 
