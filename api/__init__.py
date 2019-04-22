@@ -6,6 +6,7 @@ from api.trainers.views import trainer_bp
 from api.subscriptions.views import subs_bp
 from api.images.views import image_bp
 from api.children_pool.views import children_bp
+from api.rating_system.views import rate_bp
 from api.database.db import db
 from flask_migrate import Migrate
 from api.auth.admin import create_admin
@@ -28,7 +29,9 @@ def create_app(config_name):
     db.init_app(app)
     # Setup migration engine
     migrate = Migrate(app, db)
+    # Create database tables
     db.create_all(app=app)
+    # setup app_context to act as proxy
     app_context = app.app_context()
     app_context.push()
     create_admin()
@@ -39,4 +42,5 @@ def create_app(config_name):
     app.register_blueprint(subs_bp, url_prefix='/api/v1')
     app.register_blueprint(image_bp, url_prefix='/api/v1')
     app.register_blueprint(children_bp, url_prefix='/api/v1')
+    app.register_blueprint(rate_bp, url_prefix='/api/v1')
     return app

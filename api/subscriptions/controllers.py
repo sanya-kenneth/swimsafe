@@ -28,7 +28,7 @@ class subscriptionController:
             if not pool_to_subscribe:
                 return jsonify({'message': 'Swimming pool not found',
                                 'status': 404})
-            # Get the user who is going to make the subscribe
+            # Get the user who is going to make the subscribscription
             save_user = User.query.filter_by(user_id=current_user.user_id).first()
             # generate subscription name
             subs_name = f'{save_user.user_id} linked to {pool_to_subscribe.pool_id}'
@@ -62,7 +62,7 @@ class subscriptionController:
             return jsonify({'message': 'No subscriptions found', 'status': 404})
         pool_keys = ['pool_id', 'pool_name', 'pool_address', 'location_lat',
                      'location_long', 'opening_time', 'closing_time', 'size',
-                     'depth', 'description', 'cost', 'availability']
+                     'depth', 'description', 'weekday_fee', 'weekend_fee', 'availability']
         hold_subs = []
         if user_pools:
             for sub_pool in user_pools:
@@ -70,7 +70,8 @@ class subscriptionController:
                 pool_info = [get_pool.pool_id, get_pool.pool_name, get_pool.pool_address,
                              get_pool.location_lat, get_pool.location_long, get_pool.opening_time,
                              get_pool.closing_time, get_pool.size, get_pool.depth,
-                             get_pool.description, get_pool.cost, get_pool.available]
+                             get_pool.description, get_pool.weekday_fee, get_pool.weekend_fee,
+                             get_pool.available]
                 hold_subs.append(dict(zip(pool_keys, pool_info)))
         return jsonify({'data': hold_subs, 'status': 200})
 
