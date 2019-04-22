@@ -146,7 +146,8 @@ class TrainerController:
             working_time = get_trainer.working_time,
             description = get_trainer.description,
             availability = get_trainer.available,
-            pool_id = get_trainer.pool_id
+            pool_id = get_trainer.pool_id,
+            trainer_img = get_trainer.trainer_img
         )
         return jsonify({'data': trainer_data, 'status': 200})
 
@@ -159,12 +160,12 @@ class TrainerController:
                             'status': 404})
         trainer_list = []
         trainer_keys = ['trainer_id', 'first_name', 'last_name', 'working_time',
-                        'description', 'availability', 'pool_id']
+                        'description', 'availability', 'pool_id', 'trainer_img']
         for trainer_item in get_trainers:
             trainer_details = [trainer_item.trainer_id, trainer_item.first_name,
                                trainer_item.last_name, trainer_item.working_time,
                                trainer_item.description, trainer_item.available,
-                               trainer_item.pool_id]
+                               trainer_item.pool_id, trainer_item.trainer_img]
             trainer_list.append(dict(zip(trainer_keys, trainer_details)))
         return jsonify({'data': trainer_list, 'status': 200})
 
@@ -181,11 +182,11 @@ class TrainerController:
                             'status': 404})
         result_list = []
         t_keys = ['trainer_id', 'first_name', 'last_name', 'working_time',
-                        'description', 'availability', 'pool_id']
+                        'description', 'availability', 'pool_id', 'trainer_img']
         for individual_trainer in trainers_fetched:
             t_details = [individual_trainer.trainer_id, individual_trainer.first_name,
             individual_trainer.last_name, individual_trainer.working_time, 
             individual_trainer.description, individual_trainer.available,
-            individual_trainer.pool_id]
+            individual_trainer.pool_id, individual_trainer.trainer_img]
             result_list.append(dict(zip(t_keys, t_details)))
         return jsonify({'data': result_list, 'status': 200})

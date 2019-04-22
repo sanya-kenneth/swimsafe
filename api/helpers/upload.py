@@ -10,7 +10,7 @@ import os
 
 
 images = ('jpg', 'jpeg', 'png', 'gif')
-base_url = 'http://127.0.0.1:5000/uploads'
+base_url = 'https://swimsafeapp.herokuapp.com/uploads'
 
 
 # Initialise uploadset for pictures only
