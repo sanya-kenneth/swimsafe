@@ -48,8 +48,8 @@ def add_children_pool(current_user, pool_id):
                     'status': 201})
 
 
-def fetch_all_children_pools():
-    fetch_children_pools = Children_Pool.query.all()
+def fetch_all_children_pools(pool_id):
+    fetch_children_pools = Children_Pool.query.filter_by(pool_id=pool_id).all()
     if not fetch_children_pools:
         return jsonify({'message': 'There no pools registered yet',
                         'status': 404})
