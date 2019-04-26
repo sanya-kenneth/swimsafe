@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Easy-swim|Add children pool</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/w3.css">
+  <link rel="shortcut icon" href="assets/images/swimming.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link href="assets/css/hover.css" rel="stylesheet" media="all">
+  <link rel="stylesheet" href="assets/css/add_pool.css">
+  <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css">
+  <style>
+    .nav-btn {
+      color: rgba(240, 255, 255, 0.788) !important;
+      margin-left: 5px;
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#"><img src="assets/images/swimming.png" height="40px" width="auto"></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link hvr-bounce-to-right w3-round hvr-grow-shadow nav-btn" href="show_pools.htm">SWIMMING
+            POOLS</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link hvr-bounce-to-right w3-round hvr-grow-shadow nav-btn" href="#">ADD A SWIMMING POOL</a>
+        </li> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link hvr-bounce-to-right w3-round hvr-grow-shadow nav-btn" href="#">STATISTICS</a>
+        </li> -->
+      </ul>
+
+    </div>
+  </nav>
+
+  <div class="add-data-form w3-card-4 w3-white">
+    <br>
+    <div class="alert alert-success" role="alert" id="message_box"></div>
+    <div class="alert alert-danger" role="alert" id="error_box"></div>
+    <form>
+      <h4 class="w3-blue w3-center" style="padding:5px;">Add Children's pool</h4>
+      <br>
+      <div class="form-group">
+        <input class="form-control input" id="name" type="text" required name="name" placeholder="Swimming pool name">
+        <input class="form-control input" id="opening_time" type="text" required name="opening_time"
+          placeholder="Opening time">
+        <input class="form-control input" id="closing_time" type="text" required name="closing_time"
+          placeholder="Closing time">
+        <input class="form-control input" id="size" type="text" required name="size" placeholder="Size">
+        <input class="form-control input" id="depth" type="text" required name="depth" placeholder="Depth">
+        <textarea class="form-control input" id="description" required name="description"
+          placeholder="Description"></textarea>
+        <input class="form-control input" id="weekday_fee" type="number" required name="weekday_fee"
+          placeholder="Weekday Fee">
+        <input class="form-control input" id="weekend_fee" type="number" required name="weekend_fee"
+          placeholder="Weekend Fee">
+        <input class="form-control input" id="available" type="text" required name="available"
+          placeholder="Availability">
+        <button class="btn w3-blue login" onclick="addChildPool(event)">Add Pool</button>
+      </div>
+    </form>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="assets/js/children_pool.js"></script>
+</body>
+
+</html>

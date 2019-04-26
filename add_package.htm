@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Easy-swim|Add a package</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/w3.css">
+    <link rel="shortcut icon" href="assets/images/swimming.png" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href="assets/css/hover.css" rel="stylesheet" media="all">
+    <link rel="stylesheet" href="assets/css/add_pool.css">
+    <link rel="stylesheet" href="assets/css/add_package.css">
+    <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css">
+    <style>
+        .nav-btn {
+            color: rgba(240, 255, 255, 0.788) !important;
+            margin-left: 5px;
+            padding-left: 4px !important;
+            padding-right: 4px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <!-- Brand -->
+        <a class="navbar-brand" href="#"><img src="assets/images/swimming.png" height="40px" width="auto"></a>
+
+        <!-- Toggler/collapsibe Button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link hvr-bounce-to-right w3-round nav-btn" href="show_pools.htm">SWIMMING
+                        POOLS</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+    <div class="add-data-form w3-card-4 w3-white">
+        <br>
+        <div class="alert alert-success" role="alert" id="package_message_box"></div>
+        <div class="alert alert-danger" role="alert" id="package_error_box"></div>
+        <form>
+            <h4 class="w3-blue w3-center" style="padding:5px;">Add a package</h4>
+            <br>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Select package type:</label>
+                <select class="form-control" id="select_package">
+                    <option value="gold">gold</option>
+                    <option value="silver">silver</option>
+                    <option value="platinum">platinum</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control input" id="package_details" required name="package_details"
+                    placeholder="Package Details"></textarea>
+                <button class="btn w3-blue login" onclick="addPackage(event)">Add Package</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="assets/js/add_package.js"></script>
+</body>
+
+</html>

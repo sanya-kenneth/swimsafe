@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Easy-swim|Login</title>
+  <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/login.css">
+  <link rel="stylesheet" href="assets/css/w3.css">
+  <link rel="shortcut icon" href="assets/images/swimming.png" type="image/x-icon">
+
+  <style>
+    .input {
+      margin-bottom: 16px !important;
+    }
+
+    .no-account {
+      margin-top: 23px;
+      margin-bottom: 35px;
+      color: rgb(3, 72, 117);
+    }
+
+    .signup {
+      color: rgb(6, 122, 218);
+    }
+
+    #message_box {
+      display: none;
+    }
+
+    #error_box {
+      display: none;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="login-form w3-card-4 w3-white">
+    <div><img src="assets/images/logo.png" height="100px" width="auto"></div>
+    <br>
+    <div class="alert alert-success" role="alert" id="message_box"></div>
+    <div class="alert alert-danger" role="alert" id="error_box"></div>
+    <form>
+      <div class="form-group">
+        <input class="form-control input" id="email" type="email" required name="email" placeholder="Email">
+        <input class="form-control input" id="password" type="password" required name="password" placeholder="password">
+        <button class="btn w3-blue login" onclick="logIn(event)">Login</button>
+      </div>
+      <!-- <p class="no-account">Don't have an account! <a class="signup" href="signup.htm">Signup</a> </p> -->
+    </form>
+  </div>
+  <script src="assets/js/bootstrap/bootstrap.min.js"></script>
+  <script src="assets/js/jquery.js"></script>
+  <script src="assets/js/popper.min.js"></script>
+  <script src="assets/js/login.js"></script>
+</body>
+
+</html>

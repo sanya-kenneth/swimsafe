@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Easy-swim|Add Trainer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/w3.css">
+  <link rel="shortcut icon" href="assets/images/swimming.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link href="assets/css/hover.css" rel="stylesheet" media="all">
+  <link rel="stylesheet" href="assets/css/add_pool.css">
+  <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css">
+  <style>
+    .nav-btn {
+      color: rgba(240, 255, 255, 0.788) !important;
+      margin-left: 5px;
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#"><img src="assets/images/swimming.png" height="40px" width="auto"></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link hvr-bounce-to-right w3-round hvr-grow-shadow nav-btn" href="show_pools.htm">SWIMMING
+            POOLS</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link hvr-bounce-to-right w3-round hvr-grow-shadow nav-btn" href="#">ADD A SWIMMING POOL</a>
+        </li> -->
+        <!-- <li class="nav-item">
+          <a class="nav-link hvr-bounce-to-right w3-round hvr-grow-shadow nav-btn" href="#">STATISTICS</a>
+        </li> -->
+      </ul>
+
+    </div>
+  </nav>
+
+  <div class="add-data-form w3-card-4 w3-white">
+    <br>
+    <div class="alert alert-success" role="alert" id="message_box"></div>
+    <div class="alert alert-danger" role="alert" id="error_box"></div>
+    <form id="add_trainer_form">
+      <h4 class="w3-blue w3-center" style="padding:5px;">Add Trainer</h4>
+      <br>
+      <div class="form-group">
+        <input class="form-control input" id="firstname" type="text" required name="firstname" placeholder="Firstname">
+        <input class="form-control input" id="lastname" type="text" required name="lastname" placeholder="Lastname">
+        <input class="form-control input" id="workingtime" type="text" required name="workingtime"
+          placeholder="Working time">
+        <input class="form-control input" id="trainer_contact" type="text" required name="trainer_contact"
+          placeholder="Trainer Contact">
+        <textarea class="form-control input" id="description" required name="description"
+          placeholder="Description"></textarea>
+        <button class="btn w3-blue login" onclick="addTrainer(event)">Add Trainer</button>
+      </div>
+    </form>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="assets/js/add_trainer.js"></script>
+</body>
+
+</html>

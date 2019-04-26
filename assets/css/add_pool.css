@@ -1,0 +1,18 @@
+body{
+    background: url(../images/bg7.jpg);
+    background-size: cover;
+}
+#message_box{
+    display: none;
+}
+#error_box{
+    display: none;
+}
+.add-data-form{
+    margin: 5% 27% 5% 27%;
+    padding: 20px 90px 20px 90px;
+    border-radius: .3em;
+}
+.input{
+    margin-bottom: 10px;
+}
