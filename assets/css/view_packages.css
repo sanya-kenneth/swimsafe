@@ -1,0 +1,126 @@
+
+.package_type::before {
+    content: "Package type: ";
+    color: rgba(87, 86, 86, 0.747);
+}
+
+#silver {
+    margin:25px;
+    padding: 10px;
+    border-radius: .3em;
+    margin-top: 30%;
+}
+#silver p {
+    margin-top: 10px;
+    color: rgb(75, 77, 77);
+    text-align: justify;
+}
+
+button {
+    margin: 10px !important;
+    padding: 5px;
+    outline: none;
+    border-radius: .3em !important;
+}
+
+#silver-package {
+    display: none;
+}
+
+#no-silver-package {
+    margin-top: 25%;
+    margin-left: 5%;
+    color: rgb(6, 63, 138);
+    padding: 10px;
+}
+
+#update_success {
+    padding: 8px;
+    background-color: rgba(12, 192, 132, 0.39);
+    color: rgb(6, 87, 53);
+    display: none;
+}
+
+#update_failure {
+    padding: 8px;
+    background-color: rgba(192, 12, 81, 0.39);
+    color: rgb(87, 6, 33);
+    display: none;
+}
+
+#gold_update_success {
+    padding: 8px;
+    background-color: rgba(12, 192, 132, 0.39);
+    color: rgb(6, 87, 53);
+    display: none;
+}
+
+#gold_update_failure {
+    padding: 8px;
+    background-color: rgba(192, 12, 81, 0.39);
+    color: rgb(87, 6, 33);
+    display: none;
+}
+
+#platinum_update_success {
+    padding: 8px;
+    background-color: rgba(12, 192, 132, 0.39);
+    color: rgb(6, 87, 53);
+    display: none;
+}
+
+#platinum_update_failure {
+    padding: 8px;
+    background-color: rgba(192, 12, 81, 0.39);
+    color: rgb(87, 6, 33);
+    display: none;
+}
+
+
+#no-platinum-package {
+    margin-top: 25%;
+    margin-left: 5%;
+    color: rgb(6, 63, 138);
+    padding: 10px;
+}
+
+#platinum {
+    margin:25px;
+    padding: 10px;
+    border-radius: .3em;
+    margin-top: 30%;
+}
+
+#platinum p {
+    margin-top: 10px;
+    color: rgb(75, 77, 77);
+    text-align: justify;
+}
+
+#platinum-package {
+    display: none;
+}
+
+#gold {
+    margin:25px;
+    padding: 10px;
+    border-radius: .3em;
+    margin-top: 30%;
+}
+
+#gold p {
+    margin-top: 10px;
+    color: rgb(75, 77, 77);
+    text-align: justify;
+}
+
+#gold-package {
+    display: none;
+}
+
+#no-gold-package {
+    margin-top: 25%;
+    margin-left: 5%;
+    color: rgb(6, 63, 138);
+    padding: 10px;
+}

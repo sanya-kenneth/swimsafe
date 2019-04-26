@@ -1,0 +1,467 @@
+body {
+  background-color: rgb(243, 245, 247);
+  background-size: cover;
+}
+
+#message_box {
+  display: none;
+}
+
+#error_box {
+  display: none;
+}
+
+#edit_error_box{
+  display: none;
+}
+
+#upload_message_box {
+  display: none;
+}
+
+#upload_error_box {
+  display: none;
+}
+
+#trainer_error_box{
+  display: none;
+}
+
+.add-data-form {
+  margin: 5% 27% 5% 27%;
+  padding: 20px 90px 20px 90px;
+  border-radius: 0.3em;
+}
+
+.input {
+  margin-bottom: 10px;
+}
+
+#data_card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  /* width: 40%;   */
+}
+
+.meta1 {
+  float: left;
+  margin-top: 1.5px;
+  margin-right: 5px;
+}
+
+.meta2 {
+  float: left;
+  margin-top: 1.5px;
+  margin-right: 5px;
+}
+
+.size {
+  margin-top: 0px;
+}
+
+.depth {
+  margin-top: 0px;
+}
+
+.info {
+  margin-left: 100px !important;
+}
+
+.hold1 {
+  margin-top: 0px;
+  color: rgba(49, 48, 48, 0.849);
+}
+
+.hold2 {
+  margin-top: 0px;
+  color: rgba(49, 48, 48, 0.849);
+}
+
+.pool_name {
+  color: rgb(73, 72, 72);
+}
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 0.3em;
+  overflow: auto;
+  margin-bottom: 200px;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* tab style*/
+.tabs {
+  overflow: hidden;
+}
+
+.tablinks {
+  background-color: rgb(30, 80, 155);
+  border: 2px solid rgb(30, 80, 155);
+  outline: none;
+  display: inline;
+  cursor: pointer;
+  margin-left: 2px;
+  margin-right: 2px;
+  transition: 0.3s;
+  font-size: 17px;
+  border-radius: 3px;
+  color: white;
+  padding: 6px 10px;
+  text-align: center;
+  text-decoration: none;
+  margin: 3px 7px 3px 7px;
+}
+
+.tabs button:hover {
+  background-color: rgb(7, 64, 148) !important;
+  border: 2px solid rgb(7, 64, 148);
+}
+
+.tabs button.active {
+  background-color: rgba(31, 89, 177, 0.87);
+  border: 2px solid rgba(31, 89, 177, 0.575);
+}
+
+#update_comment {
+  border: none;
+  display: inline;
+}
+
+#update_comment:hover {
+  background-color: rgba(34, 117, 72, 0.795);
+}
+
+#update_pool {
+  background-color: rgb(41, 167, 118);
+  color: white;
+  border-radius: .3em;
+  border: none;
+  height: 43px;
+  width: auto;
+  display: inline;
+}
+
+#update_pool:hover {
+  background-color: rgba(34, 117, 72, 0.795) !important;
+}
+
+#cancel {
+  border: none;
+  background-color: rgba(167, 23, 52, 0.911);
+  height: 43px;
+  border-radius: .3em;
+  width: auto; 
+  display: inline;
+  margin-left: 0px;
+  color:white;
+}
+
+#cancel:hover {
+  border: none;
+  background-color: rgba(122, 14, 36, 0.911) !important;
+  color:white;
+}
+
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  -webkit-animation: fadeEffect 1s;
+  animation: fadeEffect 1s;
+}
+
+@-webkit-keyframes fadeEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeEffect {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.tabdiv {
+  margin-top: 10px;
+  display: block;
+}
+
+#Record_details {
+  display: block;
+}
+
+.h3 {
+  margin: 0px 5% 0px 35%;
+}
+
+.buttons {
+  margin: 0% 10% 0% 20%;
+}
+
+.data {
+  /* border: 1px solid rgba(156, 156, 156, 0.151); */
+  width: 70%;
+  margin-top: 15px;
+  margin-bottom: 10px;
+  /* margin-left: 20% !important; */
+  color: #252525dc;
+  padding: 1px 6px 1px 6px;
+  border-radius: 0.3em;
+  background-color: rgba(240, 238, 238, 0.877);
+  padding: 8px 15px 8px 15px;
+}
+
+#record_comment_data {
+  overflow: auto;
+  padding-top: 15px;
+}
+
+form {
+  margin: 0px 10px 0px 170px;
+}
+
+#pool_name::before {
+  content: "Pool name: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#size::before {
+  content: "Size: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#depth::before {
+  content: "Depth: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#address::before {
+  content: "Address: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#weekday::before {
+  content: "Weekday Fee: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#weekend::before {
+  content: "Weekdend Fee: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#opening_time::before {
+  content: "Opening Time: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#closing_time::before {
+  content: "Closing Time: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#availability::before {
+  content: "Availability: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#pool_description::before {
+  content: "Description: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#pool_photo {
+  width: 100%;
+  height: auto;
+  border-radius: .5em;
+}
+
+.pool_img {
+  border-radius: .3em;
+  height: 100px !important;
+  width: 130px !important;
+  margin-right: 10px;
+}
+
+#delete_me {
+  background-color: rgb(139, 34, 55);
+  border: 1px solid rgb(138, 44, 63);
+}
+#delete_me:hover {
+  background-color: rgb(170, 42, 67) !important;
+  border: 1px solid rgb(138, 44, 63);
+}
+
+.drop-menu:hover {
+  color: white;
+}
+
+.drop-link:hover {
+  background-color: rgb(7, 64, 148);
+}
+
+.edit-pool {
+  margin-top: 3px;
+  margin-bottom: 13px;
+}
+
+.trainer-div {
+  display: flex;
+  flex-wrap: wrap;
+}
+#trainer-card{
+  width: 30%;
+  margin: 5px;
+  margin: 4px;
+  border-radius: .3em;
+
+}
+#trainer-card:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+}
+
+/* .trainer-image-div {
+  width: 30% !important;
+} */
+
+.trainer-img {
+  height: 100%;
+  width: 100%;
+}
+
+#delete-trainer {
+  margin-left: 5% !important;
+  margin-bottom: 3%;
+  border-radius: .3em;
+}
+
+#edit-trainer {
+  margin-left: 5%;
+  border-radius: .3em;
+}
+
+#delete-trainer:hover {
+  background-color: rgb(133, 43, 43) !important;
+  border-color: rgb(133, 43, 43) !important;
+}
+
+#firstname::before {
+  content: "First name: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+#lastname::before {
+  content: "Last name: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+#desc::before {
+  content: "Description: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#worktime::before {
+  content: "Working Time: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#avail::before {
+  content: "Availability: ";
+  margin-right: 2px;
+  color: #817e7e;
+}
+
+#trainers {
+  margin: 40px !important;
+  background-color: rgba(13, 118, 184, 0.774);
+  border-radius: .3em;
+  color: white;
+  width: auto;
+  font-size: 30px;
+  margin-bottom: 130px;
+  padding: 5px;
+}
+
+#trainers::before {
+content: "Number of Trainers: ";
+
+}
+.show_statistics {
+  border: 1px solid rgb(0, 0, 0);
+}
+
+#subscriber {
+  margin: 40px !important;
+  background-color: rgba(13, 118, 184, 0.774);
+  border-radius: .3em;
+  color: white;
+  width: auto;
+  font-size: 30px;
+  margin-bottom: 130px;
+  padding: 5px;
+}
+
+#subscriber::before {
+  content: "number of subscribers: "
+}
+
+.upload-header {
+  color: rgba(42, 44, 43, 0.445);
+}
+
+#upload-spinner {
+  display: none;
+}

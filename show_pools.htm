@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Easy-swim|Swimming pools</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="assets/css/w3.css">
+  <link rel="shortcut icon" href="assets/images/swimming.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link href="assets/css/hover.css" rel="stylesheet" media="all">
+  <link rel="stylesheet" href="assets/css/bootstrap/bootstrap.css">
+  <link rel="stylesheet" href="assets/css/show_pools.css">
+  <link rel="stylesheet" href="assets/css/edit_pool.css">
+  <style>
+    .nav-btn {
+      color: rgba(240, 255, 255, 0.788) !important;
+      margin-left: 5px;
+      padding-left: 4px !important;
+      padding-right: 4px !important;
+
+    }
+
+    nav {
+      margin-bottom: 50px;
+    }
+
+    #data_card {
+      padding-left: 10px !important;
+      padding-top: 7px;
+      height: 120px;
+      margin-bottom: 8px;
+    }
+
+    #display_record {
+      margin-left: 30% !important;
+      margin-right: 30% !important;
+
+    }
+
+    .pool_img {
+      height: auto;
+      width: 80px;
+      border: 1px solid rgba(107, 106, 106, 0.075);
+      float: left;
+    }
+  </style>
+</head>
+
+<body onload="fetchPools();" id="body">
+
+  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#"><img src="assets/images/swimming.png" height="40px" width="auto"></a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link hvr-bounce-to-right w3-round  nav-btn" href="#">SWIMMING POOLS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link hvr-bounce-to-right w3-round nav-btn" href="add_pool.htm">ADD A POOL</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div id="display_record">
+  </div>
+
+  <!-- view one record Modal -->
+  <div id="dataModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <span onclick="closeModal();" class="close">&times;</span>
+      <div class="tabs">
+        <div class="buttons">
+          <button onclick="switchTab(event, 'Record_details')" class="tablinks active">Pool Details</button>
+          <button onclick="switchTab(event, 'Edit_location'); loadInfo(); " class="tablinks">Edit Pool</button>
+          <button onclick="switchTab(event, 'Edit_comment'); " class="tablinks">Trainers</button>
+          <button onclick="switchTab(event, 'Childpools')" class="tablinks">Statistics</button>
+          <button id="delete_me" onclick="deleteMethod(event);" class="tablinks">Delete pool</button>
+        </div>
+        <div class="tabdiv">
+          <div onload="dettailsView()" id="Record_details" class="tabcontent">
+            <div id="error_box">
+
+            </div>
+            <div class="details_container ">
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="dropdown">
+                    <button class="btn tablinks drop-menu " type="button" id="dropdownMenu2" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      +
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                      <a class="dropdown-item drop-menu drop-link" href="add_trainer.htm" type="button">Add Trainer</a>
+                      <a class="dropdown-item drop-menu drop-link" href="add_package.htm" type="button">Add
+                        Package</a>
+                      <a class="dropdown-item drop-menu drop-link" href="view_packages.htm" type="button">View
+                        packages</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-7"><img id="pool_photo"></div>
+                <div class="col-md-3"></div>
+              </div>
+              <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-10">
+                  <div id="pool_name" class="data">
+                  </div>
+                  <div class="overflow-auto data" id="pool_description">
+                  </div>
+                </div>
+                <div class="col-md-0"></div>
+              </div>
+
+              <div class="row">
+
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                  <div id="depth" class="data">
+                  </div>
+                  <div id="size" class="data">
+                  </div>
+                  <div id="opening_time" class="data">
+                  </div>
+                  <div id="closing_time" class="data">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div id="address" class="data">
+                  </div>
+                  <div id="weekday" class="data">
+                  </div>
+                  <div id="weekend" class="data">
+                  </div>
+                  <div id="availability" class="data">
+                  </div>
+                </div>
+                <div class="col-md-2"></div>
+              </div>
+            </div>
+          </div>
+          <div id="Edit_location" class="tabcontent">
+            <div class="row">
+              <div class="col-md-1"><br><br>
+              </div>
+              <div class="col-md-8">
+                <h3 class="h3 edit-pool">Edit Pool</h3>
+                <div class="upload-pool-img" id="upload-pool-img">
+                  <form enctype="multipart/form-data" method="POST">
+                    <h5 class="upload-header">Update Pool Image</h5>
+                    <br>
+                    <div class="alert alert-success" role="alert" id="upload_message_box"></div>
+                    <div class="alert alert-danger" role="alert" id="upload_error_box"></div>
+                    <div id="upload-spinner">
+                      <div class="spinner-border spinner-border text-info" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
+                    </div>
+                    <input type="file" name="file" id="image-input">
+                    <input type=submit value=Upload>
+                  </form>
+                </div>
+                <br>
+                <form class="form-group" id="edit_location_form">
+                  <span class="update_poolname">
+                    <input class="form-control input" type="text" placeholder="Pool name" id="update_poolname">
+                  </span>
+                  <span class="update_description">
+                    <textarea rows="5" cols="33" id="update_description" class="form-control input"
+                      placeholder="Description"></textarea>
+                  </span>
+                  <span class="update_address">
+                    <input class="form-control input" type="text" placeholder="Pool address" id="update_address">
+                  </span>
+                  <span class="update_depth">
+                    <input class="form-control input" type="text" placeholder="depth" id="update_depth">
+                  </span>
+                  <span class="update_size">
+                    <input class="form-control input" type="text" placeholder="size" id="update_size">
+                  </span>
+                  <span class="update_openingtime">
+                    <input class="form-control input" type="text" placeholder="Opening time" id="update_openingtime">
+                  </span>
+                  <span class="update_closingtime">
+                    <input class="form-control input" type="text" placeholder="Closing time" id="update_closingtime">
+                  </span>
+                  <span class="update_weekday">
+                    <input class="form-control input" type="text" placeholder="Weekday fee" id="update_weekday">
+                  </span>
+                  <span class="update_weekend">
+                    <input class="form-control input" type="text" placeholder="Weekend fee" id="update_weekend">
+                  </span>
+                  <div class=" response_container">
+                    <div class="alert alert-success" id="message_box"></div>
+                    <div class="alert alert-danger" id="edit_error_box"></div>
+                  </div>
+                  <button onclick="editPoolInfo(event);" id="update_pool">Update</button>
+                  <button onclick="Cancel();" id="cancel">cancel</button>
+                </form>
+              </div>
+              <div class="col-md-1"></div>
+            </div>
+
+          </div>
+          <div id="Edit_comment" class="tabcontent">
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <div class="row trainer-div" id="trainer-div">
+                  <div class="alert alert-danger" id="trainer_error_box"></div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+
+
+          <div id="Childpools" class="tabcontent">
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <div class="row trainer-div" id="statistics-div">
+
+                  <div class="alert alert-danger" id="trainer_error_box"></div>
+                </div>
+                <div class="row">
+                  <div class="col-md-2"></div>
+                  <div class="jumbotron col-md-8" id="show_statistics">
+
+                  </div>
+                  <div class="col-md-2"></div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-1"></div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="assets/js/view_records.js"></script>
+  <script src="assets/js/delete_record.js"></script>
+  <script src="assets/js/edit_pool.js"></script>
+  <script src="assets/js/upload_pool_image.js"></script>
+</body>
+
+</html>

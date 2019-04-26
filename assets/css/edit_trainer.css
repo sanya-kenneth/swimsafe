@@ -1,0 +1,16 @@
+.upload-header {
+    color: rgba(42, 44, 43, 0.445);
+}
+  
+#upload-spinner {
+display: none;
+}
+
+
+#upload_message_box {
+display: none;
+}
+
+#upload_error_box {
+display: none;
+}

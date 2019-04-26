@@ -1,0 +1,44 @@
+.update_poolname::before {
+    content: "Pool name: ";
+    color: rgba(87, 86, 86, 0.747);
+}
+
+.update_depth::before {
+    content: "Depth: ";
+    color: rgba(87, 86, 86, 0.747);
+}
+
+.update_size::before {
+    content: "Size: ";
+    color: rgba(87, 86, 86, 0.747);
+}
+
+.update_address::before {
+    content: "Address: ";
+    color: rgba(87, 86, 86, 0.747);
+}
+
+.update_openingtime::before {
+    content: "Opening time: ";
+    color: rgba(87, 86, 86, 0.747);
+}
+
+.update_closingtime::before {
+    content: "Closing time: ";
+    color: rgba(87, 86, 86, 0.747);
+}
+
+.update_weekday::before {
+    content: "Weekday fee: ";
+    color: rgba(87, 86, 86, 0.747);
+}
+
+.update_weekend::before{
+    content: "Weekend fee: ";
+    color: rgba(87, 86, 86, 0.747);
+}
+
+.update_description::before {
+    content: "Description: ";
+    color: rgba(87, 86, 86, 0.747);
+}

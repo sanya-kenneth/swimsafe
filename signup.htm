@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Easy-swim|signup</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/css/login.css">
+        <link rel="stylesheet" href="assets/css/w3.css">
+        <link rel="shortcut icon" href="assets/images/swimming.png" type="image/x-icon">
+
+<style>
+ /* .login{
+    background-color: rgb(30, 145, 240);
+  }*/
+  .input{
+margin-bottom: 16px !important;
+  }
+  .login-form{
+    margin-bottom: 0px;
+  }
+  .no-account{
+    margin-top: 23px;
+    color: rgb(3, 72, 117);
+  }
+  .signup{
+    color: rgb(6, 122, 218);
+  }
+  #message_box{
+    display: none;
+}
+#error_box{
+    display: none;
+}
+</style>
+
+    </head>
+    <body>
+          <div class="login-form w3-card-4 w3-white">
+                <div><img src="assets/images/logo.png" height="100px" width="auto"></div>
+                <br>
+                <div class="alert alert-success" role="alert" id="message_box"></div>
+                <div class="alert alert-danger" role="alert" id="error_box"></div>
+              <form>
+                  <div class="form-group">
+                        <input class="form-control input" type="text" required id="names" placeholder="firstname and lastname separated by a space">
+                        <input class="form-control input" type="email" required id="email" placeholder="Email">
+                        <input class="form-control input" type="text" required id="phonenumber" placeholder="phonenumber">
+                        <input class="form-control input" type="password" required id="password" placeholder="password">
+                        <input class="form-control input" type="password" required id="confirm_password" placeholder="confirm password">
+                        <button onclick="signUp(event)" class="btn w3-blue login">Signup</button>
+                  </div>
+                  <p class="no-account">Already have an account! <a class="signup" href="index.htm">Login</a> </p>
+              </form>
+          </div>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script> 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="assets/js/signup.js"></script>
+    </body>
+</html>
