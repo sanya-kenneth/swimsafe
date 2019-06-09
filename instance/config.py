@@ -11,6 +11,7 @@ class BaseConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     WHOOSH_BASE = 'whoosh'
     UPLOADED_PHOTOS_DEST = 'uploads'
+    IMGUR_ID = "d2960a3e71db5a0"
 
 
 class DevelopmentConfig(BaseConfig):

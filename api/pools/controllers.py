@@ -153,7 +153,7 @@ class PoolController:
 
         Also takes in *args which should be in the order below ::
 
-        pool_name, pool_address, location_lat, location_long, 
+        pool_name, pool_address, location_lat, location_long,
         opening_time, closing_time, size, depth, description,
         cost, available
         """
@@ -223,44 +223,44 @@ class PoolController:
                        opening_time, closing_time, size, depth, description,
                        weekday_fee, weekend_fee, available)
         self.set_initial_data(*field_tuple)
-        if pool_name is not None:
+        if pool_name is not None and pool_name != "":
             validate_pool.validate_pool_name(pool_name)
             # update pool name if a value is provided by the user
             self.update_field(hold_pools, "pool_name", pool_name)
-        if pool_address is not None:
+        if pool_address is not None and pool_address != "":
             validate_pool.validate_pool_address(pool_address)
             # update pool address if a value is provided by the user
             self.update_field(hold_pools, "pool_address", pool_address)
-        if location_lat is not None:
+        if location_lat is not None and location_lat != "":
             validate_pool.validate_location(location_lat, location_long)
             # update pool lat cordinates if a value is provided by the user
             self.update_field(hold_pools, "location_lat", location_lat)
-        if location_long is not None:
+        if location_long is not None and location_long != "":
             validate_pool.validate_location(location_lat, location_long)
             # update pool long cordinates if a value is provided by the user
             self.update_field(hold_pools, "location_long", location_long)
-        if opening_time is not None:
+        if opening_time is not None and opening_time != "":
             # update pool opening time if a value is provided by the user
             self.update_field(hold_pools, "opening_time", opening_time)
-        if closing_time is not None:
+        if closing_time is not None and closing_time != "":
             # update pool closing time if a value is provided by the user
             self.update_field(hold_pools, "closing_time", closing_time)
-        if size is not None:
+        if size is not None and size != "":
             # update pool size if a value is provided by the user
             self.update_field(hold_pools, "size", size)
-        if depth is not None:
+        if depth is not None and depth != "":
             # update pool depth if a value is provided by the user
             self.update_field(hold_pools, "depth", depth)
-        if description is not None:
+        if description is not None and description != "":
             # update pool description if a value is provided by the user
             self.update_field(hold_pools, "description", description)
-        if weekday_fee is not None:
+        if weekday_fee is not None and weekday_fee != "":
             # update pool weekday_fee if a value is provided by the user
             self.update_field(hold_pools, "weekday_fee", weekday_fee)
-        if weekend_fee is not None:
+        if weekend_fee is not None and weekend_fee != "":
             # update pool weekend_fee if a value is provided by the user
             self.update_field(hold_pools, "weekend_fee", weekend_fee)
-        if available is not None:
+        if available is not None and available != "":
             # update pool availability if a value is provided by the user
             self.update_field(hold_pools, "available", available)
         return jsonify({'message': 'Update was successful',

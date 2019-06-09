@@ -10,10 +10,10 @@ def add_children_swimming_pool(current_user, pool_id):
     return add_children_pool(current_user, pool_id)
 
 
-@children_bp.route('/children_pools', methods=['GET'])
+@children_bp.route('/<pool_id>/children_pools', methods=['GET'])
 @protected_route
-def get_children_swimming_pools(current_user):
-    return fetch_all_children_pools()
+def get_children_swimming_pools(current_user, pool_id):
+    return fetch_all_children_pools(pool_id)
 
 
 @children_bp.route('/children_pools/<pool_id>', methods=['GET'])
