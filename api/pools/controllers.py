@@ -1,7 +1,7 @@
 from flask import jsonify, request, abort,\
     make_response
 from api.database.db import db
-from api.pools.models import Pool
+from api.pools.models import Pool, Pool_packages
 from api.auth.models import User
 from api.pools.utilities import ValidatePools
 from api.auth.utilities import validateUser
@@ -153,7 +153,7 @@ class PoolController:
 
         Also takes in *args which should be in the order below ::
 
-        pool_name, pool_address, location_lat, location_long, 
+        pool_name, pool_address, location_lat, location_long,
         opening_time, closing_time, size, depth, description,
         cost, available
         """
@@ -223,44 +223,44 @@ class PoolController:
                        opening_time, closing_time, size, depth, description,
                        weekday_fee, weekend_fee, available)
         self.set_initial_data(*field_tuple)
-        if pool_name is not None:
+        if pool_name is not None and pool_name != "":
             validate_pool.validate_pool_name(pool_name)
             # update pool name if a value is provided by the user
             self.update_field(hold_pools, "pool_name", pool_name)
-        if pool_address is not None:
+        if pool_address is not None and pool_address != "":
             validate_pool.validate_pool_address(pool_address)
             # update pool address if a value is provided by the user
             self.update_field(hold_pools, "pool_address", pool_address)
-        if location_lat is not None:
+        if location_lat is not None and location_lat != "":
             validate_pool.validate_location(location_lat, location_long)
             # update pool lat cordinates if a value is provided by the user
             self.update_field(hold_pools, "location_lat", location_lat)
-        if location_long is not None:
+        if location_long is not None and location_long != "":
             validate_pool.validate_location(location_lat, location_long)
             # update pool long cordinates if a value is provided by the user
             self.update_field(hold_pools, "location_long", location_long)
-        if opening_time is not None:
+        if opening_time is not None and opening_time != "":
             # update pool opening time if a value is provided by the user
             self.update_field(hold_pools, "opening_time", opening_time)
-        if closing_time is not None:
+        if closing_time is not None and closing_time != "":
             # update pool closing time if a value is provided by the user
             self.update_field(hold_pools, "closing_time", closing_time)
-        if size is not None:
+        if size is not None and size != "":
             # update pool size if a value is provided by the user
             self.update_field(hold_pools, "size", size)
-        if depth is not None:
+        if depth is not None and depth != "":
             # update pool depth if a value is provided by the user
             self.update_field(hold_pools, "depth", depth)
-        if description is not None:
+        if description is not None and description != "":
             # update pool description if a value is provided by the user
             self.update_field(hold_pools, "description", description)
-        if weekday_fee is not None:
+        if weekday_fee is not None and weekday_fee != "":
             # update pool weekday_fee if a value is provided by the user
             self.update_field(hold_pools, "weekday_fee", weekday_fee)
-        if weekend_fee is not None:
+        if weekend_fee is not None and weekend_fee != "":
             # update pool weekend_fee if a value is provided by the user
             self.update_field(hold_pools, "weekend_fee", weekend_fee)
-        if available is not None:
+        if available is not None and available != "":
             # update pool availability if a value is provided by the user
             self.update_field(hold_pools, "available", available)
         return jsonify({'message': 'Update was successful',
@@ -299,3 +299,54 @@ class PoolController:
                     result.weekday_fee, result.weekend_fee, result.available]
             hold.append(dict(zip(keys, info)))
         return jsonify({'data': hold, 'status': 200})
+
+    def add_package(self, pool_id):
+        data = request.get_json()
+        package_type = data.get("package_type")
+        package_types = ['gold', 'platinum', 'silver']
+        if package_type not in package_types:
+            return jsonify({'message': 'Oops.. Invalid package type.'})
+        pool = Pool.query.filter_by(pool_id=pool_id).first()
+        if not pool:
+            return jsonify({'message': 'Pool not found'})
+        package_details = data.get("package_details")
+        package_exists = Pool_packages.query.filter_by(
+            pool_id=pool_id, package_type=package_type).first()
+        if package_exists:
+            setattr(package_exists, 'package_details', package_details)
+            db.session.commit()
+            return jsonify({'message': 'Pool package updated'})
+        if not package_type or not package_details:
+            return jsonify({'message': 'package type and details are required',
+                            'status': 400})
+        package = Pool_packages(pool_id=pool_id, package_type=package_type,
+                                package_details=package_details)
+        db.session.add(package)
+        db.session.commit()
+        return jsonify({'message': 'Pool package was created'})
+
+    def get_package(self, pool_id):
+        data = request.get_json()
+        package_type = data.get("package_type")
+        if not package_type:
+            return jsonify({'message': 'Please specify a package type'})
+        package = Pool_packages.query.filter_by(
+            pool_id=pool_id, package_type=package_type).first()
+        if not package:
+            return jsonify({'message': 'Package not found'})
+        return jsonify({'package_type': package.package_type,
+                        'package_details': package.package_details,
+                        'package_id': package.package_id})
+
+    def delete_package(self, current_user, package_id):
+        # check if the user is an admin
+        validate_user.is_admin_user(current_user)
+        delete_package = Pool_packages.query.filter_by(
+            package_id=package_id).first()
+        if not delete_package:
+            return jsonify({'message': 'Pool package doesnot exist',
+                            'status': 404})
+        db.session.delete(delete_package)
+        db.session.commit()
+        return jsonify({'message': 'Swimming pool package deleted successfuly',
+                        'status': 204})

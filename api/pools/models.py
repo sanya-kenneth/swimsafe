@@ -21,6 +21,13 @@ class Pool(db.Model):
                           default='not available')
     pool_thumbnail = db.Column('pool_thumnail', db.Text, nullable=True)
 
-
     def __repr__(self):
         return 'Pool %r' % self.pool_name
+
+
+class Pool_packages(db.Model):
+    package_id = db.Column('package_id', db.Integer, primary_key=True)
+    pool_id = db.Column(db.Integer, db.ForeignKey('pool.pool_id', ondelete='CASCADE'),
+                        nullable=False)
+    package_type = db.Column('package_type', db.String(120), default='none')
+    package_details = db.Column('package_details', db.Text)

@@ -11,6 +11,13 @@ class BaseConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     WHOOSH_BASE = 'whoosh'
     UPLOADED_PHOTOS_DEST = 'uploads'
+    IMGUR_ID = "d2960a3e71db5a0"
+    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
+    MAIL_USERNAME = "sanyakenneth@gmail.com"
+    MAIL_PASSWORD = "Hackaholic23"
+    MAIL_DEFAULT_SENDER = "sanyakenneth@gmail.com"
 
 
 class DevelopmentConfig(BaseConfig):
