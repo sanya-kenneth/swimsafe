@@ -6,6 +6,8 @@ from api.pools.models import Pool
 from api.auth.models import User
 from api.database.db import db
 from api.images.models import Images
+from api.helpers.flask_imgur import Imgur
+
 import os
 
 
@@ -22,21 +24,19 @@ def check_if_image_is_already_uploaded(fetched_image_url, upload_image_url):
     """
     Check if image exists
     """
-    if fetched_image_url == str(upload_image_url):
+    if str(fetched_image_url) == str(upload_image_url):
         abort(make_response(jsonify({'message': 'File already exists',
                                      'status': 400})))
 
 
 def upload_file(current_user, **kwargs):
+    imgur = Imgur(app)
     user_valid.check_user_is_loggedin(current_user)
     if request.method == 'POST' and 'file' in request.files:
         # Check if the file has a valid extension
         file_name = request.files['file']
         split_filename_and_extension = os.path.splitext(file_name.filename)
         file_extension = split_filename_and_extension[1]
-        # file_url = app.root_path + '/' + app.config['UPLOADED_PHOTOS_DEST'] + '/' + file_name.filename
-        file_url = photos.url(file_name.filename)
-        print(file_url)
         if not file_extension[1:] in images:
             return jsonify({'message': 'Wrong file type. only jpg,jpeg,png and gif images are allowed',
                             'status': 400})
@@ -44,6 +44,8 @@ def upload_file(current_user, **kwargs):
         pool_id = kwargs.get('pool_id')
         trainer_id = kwargs.get('trainer_id')
         user_id = kwargs.get('user_id')
+        image_data = imgur.send_image(file_name)
+        file_url = image_data["data"]["link"]
         if table_name == 'pools':
             pool_fetch_data = Pool.query.filter_by(pool_id=pool_id).first()
             if not pool_fetch_data:
@@ -76,12 +78,12 @@ def upload_file(current_user, **kwargs):
             fetch_images = Images.query.all()
             if fetch_images:
                 for image_info in fetch_images:
-                    check_if_image_is_already_uploaded(image_info.image_url, file_url)
+                    check_if_image_is_already_uploaded(
+                        image_info.image_url, file_url)
             image = Images(image_name=file_name.filename, image_url=file_url,
                            pool_id=pool_id)
             db.session.add(image)
             db.session.commit()
-        photos.save(request.files['file'])
         return jsonify({'message': 'Image uploaded successfully',
                         'status': 201})
     return jsonify({'message': 'Upload failed', 'status': 400})

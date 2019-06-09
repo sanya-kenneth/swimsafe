@@ -9,7 +9,7 @@ class Trainer(db.Model):
     description = db.Column('description', db.Text, nullable=False)
     available = db.Column('available', db.String(80), nullable=True,
                           default="available")
-    pool_id = db.Column(db.Integer, db.ForeignKey('pool.pool_id'),
+    pool_id = db.Column(db.Integer, db.ForeignKey('pool.pool_id', ondelete='CASCADE'),
                         nullable=False)
     trainer_img = db.Column('trainer_img', db.Text, nullable=True)
 
