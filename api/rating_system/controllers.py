@@ -50,8 +50,7 @@ def rate_trainer(current_user, trainer_id):
                     'status': 201})
 
 
-def retrieve_trainer_rating(current_user, trainer_id):
-    validate_user.check_user_is_loggedin(current_user)
+def retrieve_trainer_rating(trainer_id):
     # get all trainer ratings
     trainer_rate = RateTrainer.query.filter_by(trainer_id=trainer_id).all()
     if trainer_rate:
@@ -68,3 +67,5 @@ def retrieve_trainer_rating(current_user, trainer_id):
         # calculate the average rating for the trainer
         final_rating = total_of_trainer_rating/count_ratings
         return jsonify({'trainer_rating': final_rating, 'status': 200})
+    else:
+        return jsonify({'trainer_rating': 0, 'status': 200})
