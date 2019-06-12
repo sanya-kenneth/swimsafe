@@ -3,6 +3,9 @@ python:
   - "3.6"
 
 install:
+  - pip install Flask-SQLAlchemy
+  - pip install Whoosh
+  - pip install blinker
   - pip install -r requirements.txt
   - pip install coveralls
   - pip install codecov

@@ -11,9 +11,11 @@ from api.helpers.flask_imgur import Imgur
 import os
 
 
-images = ('jpg', 'jpeg', 'png', 'gif')
+images = ('jpg', 'jpeg', 'png', 'gif', 'tif',
+          'JPG', 'JPEG', 'PNG', 'GIF', 'TIF')
+videos = ('mp4', 'MP4', 'mpeg', 'MPEG')
 # base_url = 'https://swimsafeapp.herokuapp.com/uploads'
-base_url = 'http://127.0.0.1:5000/api/v1/uploads'
+# base_url = 'http://127.0.0.1:5000/api/v1/uploads'
 
 
 # Initialise uploadset for pictures only
@@ -37,7 +39,7 @@ def upload_file(current_user, **kwargs):
         file_name = request.files['file']
         split_filename_and_extension = os.path.splitext(file_name.filename)
         file_extension = split_filename_and_extension[1]
-        if not file_extension[1:] in images:
+        if not file_extension[1:] in images or file_extension[1:] in videos:
             return jsonify({'message': 'Wrong file type. only jpg,jpeg,png and gif images are allowed',
                             'status': 400})
         table_name = kwargs.get('table')
@@ -55,6 +57,8 @@ def upload_file(current_user, **kwargs):
                 pool_fetch_data.pool_thumbnail, file_url)
             setattr(pool_fetch_data, 'pool_thumbnail', file_url)
             db.session.commit()
+            return jsonify({'message': 'Image uploaded successfully',
+                            'status': 201})
         elif table_name == 'trainer':
             trainer_fetch_data = Trainer.query.filter_by(
                 trainer_id=trainer_id).first()
@@ -65,6 +69,8 @@ def upload_file(current_user, **kwargs):
                 trainer_fetch_data.trainer_img, file_url)
             setattr(trainer_fetch_data, 'trainer_img', file_url)
             db.session.commit()
+            return jsonify({'message': 'Image uploaded successfully',
+                            'status': 201})
         elif table_name == 'user':
             user_fetch_data = User.query.filter_by(user_id=user_id).first()
             if not user_fetch_data:
@@ -74,6 +80,8 @@ def upload_file(current_user, **kwargs):
                 user_fetch_data.user_pic, file_url)
             setattr(user_fetch_data, 'user_pic', file_url)
             db.session.commit()
+            return jsonify({'message': 'Image uploaded successfully',
+                            'status': 201})
         else:
             fetch_images = Images.query.all()
             if fetch_images:
@@ -84,6 +92,6 @@ def upload_file(current_user, **kwargs):
                            pool_id=pool_id)
             db.session.add(image)
             db.session.commit()
-        return jsonify({'message': 'Image uploaded successfully',
-                        'status': 201})
+            return jsonify({'message': 'Image uploaded successfully',
+                            'status': 201})
     return jsonify({'message': 'Upload failed', 'status': 400})

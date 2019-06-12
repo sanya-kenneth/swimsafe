@@ -6,11 +6,11 @@ from flask import current_app as app
 
 # Admin for now
 def create_admin():
-    user_info = User.query.filter_by(email='admin@gmail.com').first()
+    user_info = User.query.filter_by(email='easyswim123@gmail.com').first()
     if not user_info:
-        password = generate_password_hash('adminpassword123')
+        password = generate_password_hash('easyswimadminpassword123')
         add_admin = User(firstname='admin', lastname='admin',
-                    email='admin@gmail.com', phone_number=706778714,
-                    password=password, account_type="admin")
+                         email='easyswim123@gmail.com', phone_number=780153551,
+                         password=password, account_type="admin")
         db.session.add(add_admin)
         db.session.commit()
