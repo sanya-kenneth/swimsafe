@@ -12,6 +12,12 @@ class BaseConfig:
     WHOOSH_BASE = 'whoosh'
     UPLOADED_PHOTOS_DEST = 'uploads'
     IMGUR_ID = "d2960a3e71db5a0"
+    MAIL_SERVER = "smtp.gmail.com"
+    MAIL_PORT = 465
+    MAIL_USE_SSL = True
+    MAIL_USERNAME = "sanyakenneth@gmail.com"
+    MAIL_PASSWORD = "Hackaholic23"
+    MAIL_DEFAULT_SENDER = "sanyakenneth@gmail.com"
 
 
 class DevelopmentConfig(BaseConfig):
@@ -35,7 +41,7 @@ class TestingConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     """Production configuraion. Loads Production configuration data
     when the app is in the Production environment"""
-    DEBUG = False
+    DEBUG = True
     TESTING = False
     ENV = "Production"
     SQLALCHEMY_DATABASE_URI = os.getenv('production_db')

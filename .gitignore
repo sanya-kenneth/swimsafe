@@ -8,3 +8,4 @@ api/pools/__pycache__/
 api/database/__pycache__/
 __pycache__/
 .coverage
+api/__init__.pyc

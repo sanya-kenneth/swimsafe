@@ -8,7 +8,6 @@ from api.images.views import image_bp
 from api.children_pool.views import children_bp
 from api.rating_system.views import rate_bp
 from api.database.db import db
-from flask_migrate import Migrate
 from api.auth.admin import create_admin
 from flask_uploads import configure_uploads
 from api.helpers.upload import photos
@@ -27,8 +26,6 @@ def create_app(config_name):
     app.config['WHOOSH_BASE']
     app.config['WHOOSH_DISABLED'] = False
     db.init_app(app)
-    # Setup migration engine
-    migrate = Migrate(app, db)
     # Create database tables
     db.create_all(app=app)
     # setup app_context to act as proxy
