@@ -1,7 +1,8 @@
 from api.children_pool import children_bp
 from api.auth.utilities import protected_route
 from api.children_pool.controllers import add_children_pool,\
-    fetch_all_children_pools, fetch_one_children_pool_attached_main_pool
+    fetch_all_children_pools, fetch_one_children_pool_attached_main_pool,\
+    edit_children_pool, delete_child_pool
 
 
 @children_bp.route('/children_pools/<pool_id>', methods=['POST'])
@@ -20,3 +21,15 @@ def get_children_swimming_pools(current_user, pool_id):
 @protected_route
 def get_one_children_swimming_pool(current_user, pool_id):
     return fetch_one_children_pool_attached_main_pool(pool_id)
+
+
+@children_bp.route('/children_pools/<pool_id>/edit', methods=['PUT'])
+@protected_route
+def edit_children_swimming_pool(current_user, pool_id):
+    return edit_children_pool(current_user, pool_id)
+
+
+@children_bp.route('/children_pools/<pool_id>/delete', methods=['DELETE'])
+@protected_route
+def delete_children_swimming_pool(current_user, pool_id):
+    return delete_child_pool(current_user, pool_id)

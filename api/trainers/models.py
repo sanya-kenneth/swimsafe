@@ -5,6 +5,8 @@ class Trainer(db.Model):
     trainer_id = db.Column('trainer_id', db.Integer, primary_key=True)
     first_name = db.Column('first_name', db.String(80), nullable=False)
     last_name = db.Column('last_name', db.String(80), nullable=False)
+    trainer_contact = db.Column('trainer_contact', db.Text, nullable=True,
+                                default="None")
     working_time = db.Column('working_time', db.Text, nullable=False)
     description = db.Column('description', db.Text, nullable=False)
     available = db.Column('available', db.String(80), nullable=True,

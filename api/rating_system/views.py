@@ -11,6 +11,5 @@ def make_rating(current_user, trainer_id):
 
 
 @rate_bp.route('/rate/<trainer_id>', methods=['GET'])
-@protected_route
-def fetch_trainer_rating(current_user, trainer_id):
-    return retrieve_trainer_rating(current_user, trainer_id)
+def fetch_trainer_rating(trainer_id):
+    return retrieve_trainer_rating(trainer_id)
